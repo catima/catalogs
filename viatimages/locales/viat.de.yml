@@ -10,7 +10,12 @@ de:
       viat-by-corpus: '...oder nach Korpus'
   shared:
     footer:
-      viat_admin: 'Admin'
+      viat-admin: 'Admin'
+      viat-images: 'Bilder'
+      viat-corpus: 'Korpusse'
+      viat-help: 'Hilfe'
+      viat-contacts: 'Kontakt'
+      viat-legal: 'Rechtliches'
     user_menu:
       viat_my_album: 'Mein album'
       viat_my_images: 'Meine Bilder'
@@ -21,9 +26,9 @@ de:
         viat-search-geo: 'Geo-Suche'
       advanced_search:
         viat-search-advanced: 'Erweiterte Suche'
-  simple_search:
-    index:
-      viat-search-results-message_html: "<b>%{count_delimited}</b> Bilder mit <b>\"%{query}\"</b>"
+  simple_searches:
+    show:
+      viat-search-results-message_html: "<b>%{count_delimited}</b> Bilder mit <b>«%{query}»</b>"
       viat-no-search-criteria: "Es wurden keine Suchkriterien eingegeben"
   advanced_searches:
       show:

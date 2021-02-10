@@ -1,10 +1,11 @@
-<% content_for :title do %>
+<% provide(:title) do %>
   <%= t(".viat-search-results-message_html",
-        :query => @search.query,
-        :count_delimited => number_with_delimiter(@search.total_count)) %>
+        :query => @simple_search_results&.query,
+        :count => @simple_search_results&.total_count.presence || 0,
+        :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
 <% end %>
 
-<% content_for :top_content do %>
+<% provide(:top_content) do %>
   <div class="top-content-type-generic">
     <%= render("shared/searchlinks") %>
   </div>
@@ -14,19 +15,20 @@
   <div id="main-wrapper">
     <div id="main">
       <div class="searchmsg">
-        <% if @search.query.empty? %>
+        <% if @simple_search_results.query.empty? %>
           <%= t(".viat-no-search-criteria") %>
         <% else %>
           <%= t(".viat-search-results-message_html",
-                :query => @search.query,
-                :count_delimited => number_with_delimiter(@search.total_count)) %>
+            :query => @simple_search_results&.query,
+            :count => @simple_search_results&.total_count.presence || 0,
+            :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
         <% end %>
       </div>
 
       <div class="images-wrapper">
         <div class="images">
-          <%= render_item_list(@search) %>
-          <%= paginate(@search.items) %>
+          <%= render_item_list(@simple_search_results) %>
+          <%= paginate(@simple_search_results.items) %>
         </div>
       </div>
     </div>

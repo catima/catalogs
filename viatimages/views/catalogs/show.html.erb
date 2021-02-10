@@ -3,7 +3,7 @@
     <div id="searchbox">
       <!-- Standard search -->
       <%= bootstrap_form_tag(
-              :url => { :controller => "simple_search", :action => "index" },
+              :url => { :controller => "simple_searches", :action => "new" },
               :method => "GET",
               :layout => :inline ) do |f| %>
 
@@ -22,8 +22,7 @@
       <% end %>
 
       <div id="searchlinks-home">
-        <%= render("shared/search/geo_search") %>
-        <%= render("shared/search/advanced_search") %>
+        
       </div>
 
       <div id="searchdomain">
@@ -48,7 +47,7 @@
             <% if @corpus_type_items %>
               <% @corpus_type_items.each do | corpus | %>
                 <option value="<%= item_path(:catalog_slug => corpus.catalog, :item_type_slug => corpus.item_type, :locale => I18n.locale, :id => corpus) %>">
-                  <%= corpus.get_value("title").truncate(70) %>
+                  <%= corpus.get_value("titre").truncate(70) %>
                 </option>
               <% end %>
             <% end %>
@@ -60,8 +59,8 @@
         <% if @keywords %>
           <% @keywords.each do | keyword, style | %>
             <span class="tag <%= style %>">
-              <a href="<%= @keywords_base_url + field_value(keyword, keyword.item_type.find_field("keyword"))%>">
-                <%= field_value(keyword, keyword.item_type.find_field("keyword")) %>
+              <a href="<%= @keywords_base_url + keyword %>">
+                <%= keyword %>
               </a>
             </span>
           <% end %>

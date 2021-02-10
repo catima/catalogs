@@ -1,55 +1,37 @@
 <div id="footer-wrapper">
   <div id="logo-banner">
-    <a href="http://www.unil.ch/viaticalpes" target="_blank">
-      <%= image_tag("viaticalpes.jpg") %>
+    <a href="https://www.unil.ch/viaticalpes" target="_blank">
+      <%= image_tag("viaticalpes.jpg", alt: "Viaticalpes") %>
     </a>
     <div id="logos-biblios">
       <a href="https://www.bcu-lausanne.ch/" target="_blank">
-        <%= image_tag("bcu.gif") %>
+        <%= image_tag("bcu.gif", alt: "BCU") %>
       </a>
-      <a href="http://www.mediatheque.ch" target="_blank">
-        <%= image_tag("mediatheque-vs.gif") %>
+      <a href="https://www.mediatheque.ch" target="_blank">
+        <%= image_tag("mediatheque-vs.gif", alt: "Médiathèque Valais") %>
       </a>
-      <a href="http://www.nb.admin.ch" target="_blank">
-        <%= image_tag("snb.gif") %>
+      <a href="https://www.nb.admin.ch" target="_blank">
+        <%= image_tag("snb.gif", alt: "Bibliothèque Nationale Suisse") %>
       </a>
-      <a href="http://www.ville-ge.ch/bge" target="_blank">
-        <%= image_tag("bge.gif") %>
+      <a href="https://www.ville-ge.ch/bge" target="_blank">
+        <%= image_tag("bge.gif", alt: "BGE") %>
       </a>
-      <a href="http://bpun.unine.ch" target="_blank">
-        <%= image_tag("bne.gif") %>
+      <a href="https://bpun.unine.ch" target="_blank">
+        <%= image_tag("bne.gif", alt: "BNE") %>
       </a>
-      <a href="http://www.burgerbib.ch" target="_blank">
-        <%= image_tag("bubibe.gif") %>
+      <a href="https://www.burgerbib.ch" target="_blank">
+        <%= image_tag("bubibe.gif", alt: "Burgerbiliothek Bern") %>
       </a>
     </div>
   </div>
   <div id="footer">
-    <% if catalog.menu_items.count > 0 %>
-      <% catalog.menu_items.where(parent_id:nil).sorted.each do |menu_item| %>
-        <% submenus = menu_item.submenus %>
-        <li <% if submenus.count > 0 %> class="dropdown" <% else %> class="inline" <% end %> >
-          <a href="<%= menu_item.get_url %>" <% if submenus.count > 0 %> class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" <% end %> ><%= menu_item.title %><% if submenus.count > 0 %><span class="caret"></span><% end %></a>
-          <% if submenus.count > 0 %>
-            <ul class="dropdown-menu">
-              <% submenus.each do |sub_menu| %>
-                <% if sub_menu.title == '---' %>
-                  <li role="separator" class="divider"></li>
-                <% else %>
-                  <li><a href="<%= sub_menu.get_url %>"><%= sub_menu.title %></a></li>
-                <% end %>
-              <% end %>
-            </ul>
-          <% end %>
-        </li>
-      <% end %>
-    <% end %>
-    <% if admin_menu_visible? %>
-      <%= render("shared/admin_menu") %>
-    <% else %>
-      <%= link_to(
-              t(".viat_admin"),
-              new_user_session_path(:locale => I18n.locale)) %>
-    <% end %>
+    <%= link_to(t('.viat-images'), '/viatimages/' + I18n.locale.to_s + '/images') %>
+    <%= link_to(t('.viat-corpus'), '/viatimages/' + I18n.locale.to_s + '/corpus') %>
+
+    <%= link_to(t('.viat-help'), '/viatimages/' + I18n.locale.to_s + '/aide') %>
+    <%= link_to(t('.viat-contacts'), '/viatimages/' + I18n.locale.to_s + '/contact') %>
+    <%= link_to(t('.viat-legal'), '/viatimages/' + I18n.locale.to_s + '/legal') %>
+
+    <%= link_to(t('.viat-admin'), '/viatimages/' + I18n.locale.to_s + '/admin') %>
   </div>
 </div>

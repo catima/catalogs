@@ -14,7 +14,6 @@
 .nav-tabs li.active > a:focus {
   background-color: #fff;
   border-bottom-color: transparent !important;
-  cursor: default;
   border-radius: 0px;
 }
 
@@ -35,11 +34,6 @@
   border: 1px solid #aaaaaa;
 }
 
-.ui-tabs {
-  text-align: center !important;
-  margin-top: 35px;
-}
-
 .ui-btns {
   height: 50px;
 }
@@ -48,13 +42,4 @@
   float: right;
   margin-right: 20px;
   margin-top: 20px;
-}
-.nav-tabs.centered > li, .nav-pills.centered > li {
-  float:none;
-  display:inline-block;
-  *display:inline; /* ie7 fix */
-  zoom:1; /* hasLayout ie7 trigger */
-}
-.nav-tabs.centered, .nav-pills.centered {
-  text-align:center;
 }

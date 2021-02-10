@@ -98,12 +98,21 @@
 #caracteristiquesLabel:focus, #remarquesLabel:focus, #pdfLink a:focus {
   text-decoration: none;
 }
+
 #image-tabs {
   margin-top: 35px;
+  justify-content: center;
+}
+#image-tabs li {
+  border: 1px solid #dee2e6;
+  flex-grow: 0;
+  cursor: pointer;
+  margin-right: 7px;
 }
 #image-tabs li a {
   width: 110px;
 }
+
 #carte-content {
   margin-top: 10px;
 }

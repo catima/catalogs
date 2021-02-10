@@ -12,12 +12,6 @@
   <% end %>
 
   <div id="corpus-persos">
-    <% @personne_associee.value_for_item(@item).each do |personne| %>
-      <%= render "items/type/shared/associated_person", :person => personne %>
-      <% if personne != @personne_associee.value_for_item(@item).last %>
-        <br>
-      <% end %>
-    <% end %>
   </div>
 
   <div id="corpus-details">
@@ -46,18 +40,6 @@
       <% end %>
     </p>
 
-    <% if @textes_online && strip_tags(field_value(@item, @textes_online)).present? %>
-      <div class="corpusInfo">
-        <span><%= t(".viat-online-book-collection") %>:</span>
-        <div id="enLigne">
-          <% @textes_online.value_for_item(@item).each do |texte| %>
-            <a href="<%= texte.item_type.primary_field.raw_value(texte) %>" target="_blank"><%= field_value(texte, texte.item_type.find_field('titre')) ? field_value(texte, texte.item_type.find_field('titre')) : t(".viat-consult") %></a>
-          <% end %>
-        </div>
-        <br>
-      </div>
-    <% end %>
-
     <div class="corpusInfo">
       <br>
       <span><%= t(".viat-description") %>:</span><br>
@@ -75,8 +57,8 @@
       <% end %>
       <br>
       <div id="etablissementCorpus">
-        <% if @etablissement && @etablissement.get_value('web').present? %>
-          <a href="<%= @etablissement.get_value('web') %>" target="_blank"><%= field_value(@etablissement, @etablissement.item_type.find_field('name')) %></a>
+        <% if @etablissement && @etablissement.get_value('url').present? %>
+          <a href="<%= @etablissement.get_value('url') %>" target="_blank"><%= field_value(@etablissement, @etablissement.item_type.find_field('nom')) %></a>
         <% end %>
         <% if @cote && strip_tags(field_value(@item, @cote)).present? %>
           <%= @cote.label %>: <%= field_value(@item, @cote) %>
@@ -111,7 +93,7 @@
   <span class="searchmsg">
      <%= t(".viat-title-images",
            :images_count => @images_count,
-           :corpus_title => @item.get_value('title')) %>
+           :corpus_title => @item.get_value('titre')) %>
   </span>
 </div>
 

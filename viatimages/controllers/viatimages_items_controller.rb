@@ -3,10 +3,10 @@ class ViatimagesItemsController < ItemsController
 
   def index
     super
-
     # If corpus id request parameter is available, send corresponding corpus item to view
     @corpus = Item.where(id: params['corpus']).first if params['corpus'].present?
   end
+
   def show
     super
 
@@ -18,44 +18,46 @@ class ViatimagesItemsController < ItemsController
       when @corpus_item_type_slug
         # objects for the "corpus" item type
         @item.applicable_fields.each do |field|
-          @title = field if field.slug == "title"
-          @titre_trad = field if field.slug == "titre-traduit"
-          @title_long = field if field.slug == "title-long"
+          @titre = field if field.slug == "titre"
+          #@titre_trad = field if field.slug == "titre-traduit"
+          @titre_long = field if field.slug == "titre-long"
           @lieu_edition = field if field.slug == "lieu-edition"
           @editeur = field if field.slug == "editeur"
-          @personne_associee = field if field.slug == "personne-associee"
+          #@personne_associee = field if field.slug == "personne-associee"
           @siecle_edition = field if field.slug == "siecle-edition"
           @siecle_voyage = field if field.slug == "siecle-voyage"
-          @date_edition = field if field.slug == "date-edition"
+          @date_edition_debut = field if field.slug == "date-edition-debut"
+          @date_edition_fin = field if field.slug == "date-edition-fin"
           @format = field if field.slug == "format"
-          @tome_volume = field if field.slug == "tome-volume"
-          @nbre_illustrations = field if field.slug == "nbre-illustrations"
+          @tome = field if field.slug == "tome"
+          @nombre_illustrations = field if field.slug == "nombre-illustrations"
           @cote = field if field.slug == "cote"
           @url_catalogue = field if field.slug == "url-catalogue"
-          @comment = field if field.slug == "comment"
-          @textes_online = field if field.slug == "textes-online"
+          @remarques = field if field.slug == "remarques"
+          #@textes_online = field if field.slug == "textes-online"
           @collection_ouvrage = field if field.slug == "collection-ouvrage"
           @langue_ouvrage = field if field.slug == "langue-ouvrage"
-          @autre_editions = field if field.slug == "autres-editions"
+          @autres_editions = field if field.slug == "autres-editions"
           @provenance_collection = field if field.slug == "provenance"
           @description_collection = field if field.slug == "description"
         end
 
         @etablissement = @item.get_value('etablissement')
         fields_and_item_references(@item) do |_, browse| @images_count = browse.total_count end
+
       when @image_item_type_image_slug
         # objects for the "images" item type
         @item.applicable_fields.each do |field|
           @image_id = field if field.slug == "image-id"
           @image = field if field.slug == "image"
-          @texte_image = field if field.slug == "texte-image"
-          @titre_orig = field if field.slug == "orig-title"
-          @titre = field if field.slug == "title"
-          @illustrateurs = field if field.slug == "personne-associee"
+          @texte_dans_image = field if field.slug == "texte-dans-image"
+          @titre_original = field if field.slug == "titre-original"
+          #@titre = field if field.slug == "title"
+          #@illustrateurs = field if field.slug == "personne-associee"
           @corpus = field if field.slug == "corpus"
           @description = field if field.slug == "description"
-          @remarque = field if field.slug == "remarque"
-          @lieu_edition_image = field if field.slug == "lieu-edition"
+          @remarques = field if field.slug == "remarques"
+          @image_lieu_edition = field if field.slug == "image-lieu-edition"
           @date_evenement = field if field.slug == "date-evenement"
           @illustration_composee = field if field.slug == "illustration-composee"
           @planche_depliante = field if field.slug == "planche-depliante"
@@ -64,11 +66,11 @@ class ViatimagesItemsController < ItemsController
           @hauteur = field if field.slug == "hauteur"
           @echelle_origine = field if field.slug == "echelle-origine"
           @emplacement = field if field.slug == "emplacement"
-          @emplacement_ouvrage = field if field.slug == "emplacement-ouvrage"
+          @emplacement_ouvrage = field if field.slug == "emplacement-dans-ouvrage"
           @genre = field if field.slug == "genre"
           @descripteur_carte = field if field.slug == "descripteur-carte"
           @critere_technique = field if field.slug == "critere-technique"
-          @location = field if field.slug == "location"
+          @location = field if field.slug == "geo-location"
           @domaine = field if field.slug == "domaine"
           @keyword = field if field.slug == "mot-cle"
           @geographie = field if field.slug == "geo"
@@ -85,7 +87,7 @@ class ViatimagesItemsController < ItemsController
 
         if @geographie
           # regroup all geography values by feature-class
-          @geographie_sorted = @item.get_value(@geographie).group_by{|item| item.item_type.find_field('feature-class').raw_value(item)}.values
+          @geographie_sorted = @item.get_value(@geographie).group_by{|item| item.item_type.find_field('geo-feature-class').raw_value(item)}.values
         end
     end
   end
