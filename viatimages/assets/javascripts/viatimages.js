@@ -28,15 +28,16 @@ $(document).ready(function() {
     $('#caracteristiques').animate({height: 'toggle'});
   });
 
-    $("a#remarquesLabel").click(function() {
-        d = $('#remarques').css('display');
-        if (d == 'none') {
-            $('#arrowRemarques').attr('src', '/assets/arrow-collapse.gif');
-        } else {
-            $('#arrowRemarques').attr('src', '/assets/arrow-expand.gif');
-        }
-        $('#remarques').animate({height: 'toggle'});
-    });
+  $("a#remarquesLabel").click(function(e) {
+    e.preventDefault()
+    d = $('#remarques').css('display');
+    if (d == 'none') {
+      $('#arrowRemarques').attr('src', '/assets/arrow-collapse.gif');
+    } else {
+      $('#arrowRemarques').attr('src', '/assets/arrow-expand.gif');
+    }
+    $('#remarques').animate({height: 'toggle'});
+  });
 
     $("a#texteImageLabel").click(function() {
         d = $('#texteImage').css('display');
