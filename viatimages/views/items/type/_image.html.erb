@@ -82,7 +82,9 @@
 
             <p class="info">
               <a id="caracteristiquesLabel" href="#">
-                <span><%= t(".viat-characteristics") %></span><%= image_tag("arrow-expand.gif", :id => "arrowCaracteristiques", :class => "info-toggle-img") %>
+                <span><%= t(".viat-characteristics") %></span>
+                <%= image_tag("arrow-expand.gif", :id => "arrowCaracteristiquesExpand", :class => "info-toggle-img") %>
+                <%= image_tag("arrow-collapse.gif", :id => "arrowCaracteristiquesCollapse", :class => "info-toggle-img hidden") %>
               </a>
             </p>
             <div id="caracteristiques">
@@ -158,7 +160,9 @@
               (@date_evenement && strip_tags(field_value(@item, @date_evenement)).present?) %>
               <p class="info">
                 <a id ="remarquesLabel" href="#">
-                  <span><%= t(".viat-comments") %></span><%= image_tag("arrow-expand.gif", :id => "arrowRemarques", :class => "info-toggle-img") %>
+                  <span><%= t(".viat-comments") %></span>
+                  <%= image_tag("arrow-expand.gif", :id => "arrowRemarquesExpand", :class => "info-toggle-img") %>
+                  <%= image_tag("arrow-collapse.gif", :id => "arrowRemarquesCollapse", :class => "info-toggle-img hidden") %>
                 </a>
               </p>
               <div id="remarques">

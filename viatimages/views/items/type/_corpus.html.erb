@@ -1,14 +1,14 @@
 <div id="ouvrage">
-  <% if @title && strip_tags(field_value(@item, @title)).present? %>
-    <h2 id="titreOuvrage"><%= field_value(@item, @title) %></h2>
+  <% if @titre && strip_tags(field_value(@item, @titre)).present? %>
+    <h2 id="titreOuvrage"><%= field_value(@item, @titre) %></h2>
   <% end %>
 
   <% if @titre_trad && strip_tags(field_value(@item, @titre_trad)).present? %>
     <h2 id="titreOuvrageTrad"><%= field_value(@item, @titre_trad) %></h2>
   <% end %>
 
-  <% if @title_long && strip_tags(field_value(@item, @title_long)).present? %>
-    <h4 id="titreOuvrageLong"><%= field_value(@item, @title_long) %></h4>
+  <% if @titre_long && strip_tags(field_value(@item, @titre_long)).present? %>
+    <h4 id="titreOuvrageLong"><%= field_value(@item, @titre_long) %></h4>
   <% end %>
 
   <div id="corpus-persos">

@@ -21,22 +21,27 @@ $(document).ready(function() {
     e.preventDefault()
     d = $('#caracteristiques').css('display');
     if (d == 'none') {
-      $('#arrowCaracteristiques').attr('src', '/assets/arrow-collapse.gif');
+      document.getElementById('arrowCaracteristiquesExpand').classList.add('hidden')
+      document.getElementById('arrowCaracteristiquesCollapse').classList.remove('hidden')
     } else {
-      $('#arrowCaracteristiques').attr('src', '/assets/arrow-expand.gif');
+      document.getElementById('arrowCaracteristiquesExpand').classList.remove('hidden')
+      document.getElementById('arrowCaracteristiquesCollapse').classList.add('hidden')
     }
     $('#caracteristiques').animate({height: 'toggle'});
   });
 
-    $("a#remarquesLabel").click(function() {
-        d = $('#remarques').css('display');
-        if (d == 'none') {
-            $('#arrowRemarques').attr('src', '/assets/arrow-collapse.gif');
-        } else {
-            $('#arrowRemarques').attr('src', '/assets/arrow-expand.gif');
-        }
-        $('#remarques').animate({height: 'toggle'});
-    });
+  $("a#remarquesLabel").click(function(e) {
+    e.preventDefault()
+    d = $('#remarques').css('display');
+    if (d == 'none') {
+      document.getElementById('arrowRemarquesExpand').classList.add('hidden')
+      document.getElementById('arrowRemarquesCollapse').classList.remove('hidden')
+    } else {
+      document.getElementById('arrowRemarquesExpand').classList.remove('hidden')
+      document.getElementById('arrowRemarquesCollapse').classList.add('hidden')
+    }
+    $('#remarques').animate({height: 'toggle'});
+  });
 
     $("a#texteImageLabel").click(function() {
         d = $('#texteImage').css('display');
