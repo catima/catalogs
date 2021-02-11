@@ -37,6 +37,7 @@ fr:
   items:
       index:
         images-for-book: "images pour l'ouvrage"
+        images-for-domain: "images pour le domaine"
       item_list_nav:
         back: "Retour à la page de résultats"
         viat-images: "Image %{current} de %{total}"

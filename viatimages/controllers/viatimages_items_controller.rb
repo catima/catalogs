@@ -3,6 +3,13 @@ class ViatimagesItemsController < ItemsController
 
   def index
     super
+    
+    # Check if images are requested for a single domain
+    if @_request['domaine']
+      lang_domain = @_request['domaine']
+      @domain = lang_domain[3..]
+    end
+
     # If corpus id request parameter is available, send corresponding corpus item to view
     @corpus = Item.where(id: params['corpus']).first if params['corpus'].present?
   end

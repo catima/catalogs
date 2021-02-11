@@ -37,6 +37,7 @@ it:
   items:
       index:
         images-for-book: "immagini per il libro"
+        images-for-domain: "immagini per l'area"
       item_list_nav:
         back: "Torna ai risultati di ricerca"
         viat-images: "Immagine %{current} di %{total}"
