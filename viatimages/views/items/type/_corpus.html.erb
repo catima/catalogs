@@ -96,17 +96,3 @@
            :corpus_title => @item.get_value('titre')) %>
   </span>
 </div>
-
-<% fields_and_item_references(@item) do |field, browse| %>
-  <% if browse.item_type.slug === 'images' %>
-    <%= render_item_list(browse) %>
-    <% if browse.more? %>
-      <%= link_to(items_path(
-                      :item_type_slug => browse.item_type,
-                      browse.field.slug => browse.value
-                  )) do %>
-        <%= t(".viat-view-more") %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>

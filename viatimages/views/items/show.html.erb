@@ -1,6 +1,5 @@
 <% content_for :top_content do %>
-  <% case @item_type.slug
-       when @image_item_type_image_slug %>
+  <% if @item_type.slug == "images" %>
     <div class="top-content-type-item">
       <%= render("shared/searchlinks") %>
       <div class="items-nav"><%= render_item_list_nav(item_list, @item) if item_list %></div>
@@ -15,10 +14,7 @@
 <div id="main-content">
   <div id="main-wrapper">
     <div id="main">
-      <% case @item_type.slug
-           when @corpus_item_type_slug %>
-        <%= render("items/type/corpus") %>
-      <% when @image_item_type_image_slug %>
+      <% if @item_type.slug == "images" %>
         <%= render("items/type/image") %>
       <% else %>
         <%= render("items/type/other") %>

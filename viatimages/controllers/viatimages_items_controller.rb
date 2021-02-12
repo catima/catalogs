@@ -5,26 +5,16 @@ class ViatimagesItemsController < ItemsController
     super
     
     # Check if images are requested for a single domain
-    if @_request['domaine']
-      lang_domain = @_request['domaine']
+    if params['domaine']
+      lang_domain = params['domaine']
       @domain = lang_domain[3..]
     end
 
     # If corpus id request parameter is available, send corresponding corpus item to view
-    @corpus = Item.where(id: params['corpus']).first if params['corpus'].present?
-  end
+    if params['corpus'].present?
+      @corpus = Item.where(id: params['corpus']).first
 
-  def show
-    super
-
-    @corpus_item_type_slug = "corpus"
-    @image_item_type_image_slug = "images"
-
-    # Prepare some objects for the view according to the item type slug
-    case @item_type.slug
-      when @corpus_item_type_slug
-        # objects for the "corpus" item type
-        @item.applicable_fields.each do |field|
+      @corpus.applicable_fields.each do |field|
           @titre = field if field.slug == "titre"
           #@titre_trad = field if field.slug == "titre-traduit"
           @titre_long = field if field.slug == "titre-long"
@@ -49,53 +39,65 @@ class ViatimagesItemsController < ItemsController
           @description_collection = field if field.slug == "description"
         end
 
-        @etablissement = @item.get_value('etablissement')
-        fields_and_item_references(@item) do |_, browse| @images_count = browse.total_count end
-
-      when @image_item_type_image_slug
-        # objects for the "images" item type
-        @item.applicable_fields.each do |field|
-          @image_id = field if field.slug == "image-id"
-          @image = field if field.slug == "image"
-          @texte_dans_image = field if field.slug == "texte-dans-image"
-          @titre_original = field if field.slug == "titre-original"
-          #@titre = field if field.slug == "title"
-          #@illustrateurs = field if field.slug == "personne-associee"
-          @corpus = field if field.slug == "corpus"
-          @description = field if field.slug == "description"
-          @remarques = field if field.slug == "remarques"
-          @image_lieu_edition = field if field.slug == "image-lieu-edition"
-          @date_evenement = field if field.slug == "date-evenement"
-          @illustration_composee = field if field.slug == "illustration-composee"
-          @planche_depliante = field if field.slug == "planche-depliante"
-          @en_couleur = field if field.slug == "en-couleurs"
-          @largeur = field if field.slug == "largeur"
-          @hauteur = field if field.slug == "hauteur"
-          @echelle_origine = field if field.slug == "echelle-origine"
-          @emplacement = field if field.slug == "emplacement"
-          @emplacement_ouvrage = field if field.slug == "emplacement-dans-ouvrage"
-          @genre = field if field.slug == "genre"
-          @descripteur_carte = field if field.slug == "descripteur-carte"
-          @critere_technique = field if field.slug == "critere-technique"
-          @location = field if field.slug == "geo-location"
-          @domaine = field if field.slug == "domaine"
-          @keyword = field if field.slug == "mot-cle"
-          @geographie = field if field.slug == "geo"
-          @texte_legende = field if field.slug == "texte-legende"
-          @chercheur = field if field.slug == "chercheur"
-          @texte_associe = field if field.slug == "texte-associe"
-        end
-
-        # define image thumbnail size
-        @image_size = '400x400'
-
-        # get local value for boolean true
-        @yes = t('yes')
-
-        if @geographie
-          # regroup all geography values by feature-class
-          @geographie_sorted = @item.get_value(@geographie).group_by{|item| item.item_type.find_field('geo-feature-class').raw_value(item)}.values
-        end
+        @etablissement = @corpus.get_value('etablissement')
+        fields_and_item_references(@corpus) do |_, browse| @images_count = browse.total_count end
     end
+  end
+
+  def show
+    super
+
+    # To show a corpus we rather show the list of images where the corpus
+    # details are rendered at the top of the image list.
+    if @item_type.slug == "corpus"
+      return redirect_to items_path(item_type_slug: "images", corpus: @item.id)
+    end
+    
+    # Prepare some objects for showing the image list (item type "images")
+    if @item_type.slug == "images"
+      @item.applicable_fields.each do |field|
+        @image_id = field if field.slug == "image-id"
+        @image = field if field.slug == "image"
+        @texte_dans_image = field if field.slug == "texte-dans-image"
+        @titre_original = field if field.slug == "titre-original"
+        #@titre = field if field.slug == "title"
+        #@illustrateurs = field if field.slug == "personne-associee"
+        @corpus = field if field.slug == "corpus"
+        @description = field if field.slug == "description"
+        @remarques = field if field.slug == "remarques"
+        @image_lieu_edition = field if field.slug == "image-lieu-edition"
+        @date_evenement = field if field.slug == "date-evenement"
+        @illustration_composee = field if field.slug == "illustration-composee"
+        @planche_depliante = field if field.slug == "planche-depliante"
+        @en_couleur = field if field.slug == "en-couleurs"
+        @largeur = field if field.slug == "largeur"
+        @hauteur = field if field.slug == "hauteur"
+        @echelle_origine = field if field.slug == "echelle-origine"
+        @emplacement = field if field.slug == "emplacement"
+        @emplacement_ouvrage = field if field.slug == "emplacement-dans-ouvrage"
+        @genre = field if field.slug == "genre"
+        @descripteur_carte = field if field.slug == "descripteur-carte"
+        @critere_technique = field if field.slug == "critere-technique"
+        @location = field if field.slug == "geo-location"
+        @domaine = field if field.slug == "domaine"
+        @keyword = field if field.slug == "mot-cle"
+        @geographie = field if field.slug == "geo"
+        @texte_legende = field if field.slug == "texte-legende"
+        @chercheur = field if field.slug == "chercheur"
+        @texte_associe = field if field.slug == "texte-associe"
+      end
+
+      # define image thumbnail size
+      @image_size = '400x400'
+
+      # get local value for boolean true
+      @yes = t('yes')
+
+      if @geographie
+        # regroup all geography values by feature-class
+        @geographie_sorted = @item.get_value(@geographie).group_by{|item| item.item_type.find_field('geo-feature-class').raw_value(item)}.values
+      end
+    end
+
   end
 end

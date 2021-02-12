@@ -10,11 +10,7 @@
   <div id="main-wrapper">
     <div id="main">
       <% if @corpus.present? %>
-        <div id="ouvrage">
-          <span class="searchmsg">
-            <%= @browse.total_count %> <%= t(".images-for-book") %>: <i>«<%= @corpus.item_type.primary_field.raw_value(@corpus) %>»</i>
-          </span>
-        </div>
+        <%= render("items/type/corpus") %>
       <% end %>
 
       <% if @domain.present? %>
