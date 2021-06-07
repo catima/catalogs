@@ -1,0 +1,46 @@
+<% content_for :title do %>
+  <title>Plateforme Rhône</title>
+<% end %>
+
+<% content_for :head do %>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <%= stylesheet_link_tag("rhone", :media => "all") %>
+  <%= javascript_include_tag("rhone") %>
+  <script src="https://unpkg.com/leaflet-tilelayer-swiss@2.2.1/dist/Leaflet.TileLayer.Swiss.umd.js"
+    integrity="sha384-euGDvW95PJJoBC7xefx6xWF1eZt1Y2HskqSURUUZgd+ND6QEVSt9VKPdzl82hDQq"
+    crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuzzy-search@3.2.1/dist/FuzzySearch.min.js"></script>
+<% end %>
+
+<header>
+  <nav>
+    <ol>
+      <li class="brand">
+        <a href="https://www.plateforme-rhone.ch/">
+          <img src="https://www.plateforme-rhone.ch/template/image/logo.gif" alt="Plateforme Rhône" %>
+        </a>
+      </li>
+      <li><a href="/rhone/fr">Cartes anciennes</a></li>
+      <li><a href="/rhone/fr/institutions-archivage">Institutions d'archivage</a></li>
+    </ol>
+  </nav>
+
+  <div class="jumbo-wrapper">
+    <div class="logo-banner <% if @cartes %>small<% end %>"></div>
+    <div class="jumbo"></div>
+    <% if @cartes %>
+      <div class="timeline"></div>
+    <% end %>
+  </div>
+</header>
+
+<% if @cartes %>
+  <%= yield %>
+<% else %>
+  <div class="content">
+    <%= yield %>
+  </div>
+<% end %>
+
+
+<% parent_layout "base" %>
