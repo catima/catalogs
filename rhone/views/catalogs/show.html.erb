@@ -257,7 +257,7 @@ M.setup = function () {
     d.pt = proj(d.lng, d.lat)
     d.ox = d.x = d.pt.x
     d.oy = d.y = d.pt.y
-    d.periods = JSON.parse(d.periods).map(v => +v)
+    d.periods = JSON.parse(d.periods || '[]').map(v => +v)
 
     // Build the search string
     d.search = this.sanitizeSearchString(`${d.title} ${d.date}`)
@@ -471,7 +471,7 @@ M.sanitizeSearchString = function (s) {
     .replace(/[òóôö]/g, 'o')
     .replace(/[ùúûü]/g, 'u')
     .replace(/[œ]/g, 'oe')
-    .replace(/[^a-z0-9]/g,'')
+    .replace(/[^a-z0-9]/g,' ')
 }
 
 M.updateList = function () {
@@ -494,7 +494,6 @@ M.updateList = function () {
 }
 
 
-//M.map.on('viewreset', M.render.bind(M))
 M.map.on('zoomend', M.render.bind(M))
 M.map.on('moveend', M.render.bind(M))
 M.map.on('click', M.unselectItems.bind(M))
