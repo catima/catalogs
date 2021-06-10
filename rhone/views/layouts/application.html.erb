@@ -14,15 +14,30 @@
 
 <header>
   <nav>
+    <a class="brand" href="https://www.plateforme-rhone.ch/">
+      <img src="https://www.plateforme-rhone.ch/template/image/logo.gif" alt="Plateforme Rhône" %>
+    </a>
     <ol>
-      <li class="brand">
-        <a href="https://www.plateforme-rhone.ch/">
-          <img src="https://www.plateforme-rhone.ch/template/image/logo.gif" alt="Plateforme Rhône" %>
-        </a>
-      </li>
       <li><a href="/rhone/fr">Cartes anciennes</a></li>
       <li><a href="/rhone/fr/institutions-archivage">Institutions d'archivage</a></li>
     </ol>
+    <div class="hamburger" style="text-align: right; margin: auto 20px auto auto;">
+      <svg id="menu" xmlns='http://www.w3.org/2000/svg'
+        width="30" height="30" viewBox="0 0 30 30">
+        <line x1="0" y1="7" x2="30" y2="7" />
+        <line x1="0" y1="15" x2="30" y2="15" />
+        <line x1="0" y1="23" x2="30" y2="23" />
+      </svg>
+      <svg id="cross" class="hidden" xmlns='http://www.w3.org/2000/svg'
+        width="30" height="30" viewBox="0 0 30 30">
+        <line x1="4" y1="4" x2="26" y2="26" />
+        <line x1="4" y1="26" x2="26" y2="4" />
+      </svg>
+    </div>
+    <div class="menu">
+      <div><a href="/rhone/fr">Cartes anciennes</a></div>
+      <div><a href="/rhone/fr/institutions-archivage">Institutions d'archivage</a></div>
+    </div>
   </nav>
 
   <div class="jumbo-wrapper">
@@ -42,5 +57,34 @@
   </div>
 <% end %>
 
+
+<script>
+  d3.select('.hamburger')
+    .on('click', _ => {
+      if (document.querySelector('.hamburger #menu').classList.contains('hidden')) {
+        hideMenu()
+      } else {
+        showMenu()
+      }
+    })
+  
+  function showMenu () {
+    d3.select('nav .menu')
+      .transition()
+      .style('height', '94px')
+      
+    document.querySelector('.hamburger #menu').classList.add('hidden')
+    document.querySelector('.hamburger #cross').classList.remove('hidden')
+  }
+
+  function hideMenu () {
+    d3.select('nav .menu')
+      .transition()
+      .style('height', '0px')
+      
+    document.querySelector('.hamburger #menu').classList.remove('hidden')
+    document.querySelector('.hamburger #cross').classList.add('hidden')
+  }
+</script>
 
 <% parent_layout "base" %>

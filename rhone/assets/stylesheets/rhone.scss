@@ -3,12 +3,15 @@ body {
   font-family: Arial, "Liberation Sans", sans-serif;
   font-size: 14px;
   background-color: #eae9e8;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 nav {
   width: 100%;
   background: #000;
   margin-bottom: 15px;
+  display: flex;
 }
 
 nav ol {
@@ -37,6 +40,41 @@ nav a {
 nav a:hover {
   color: #e0e0e0;
   text-decoration: none;
+}
+
+nav .hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+nav .hamburger line {
+  stroke: #fff;
+  stroke-width: 3;
+  fill: none;
+}
+
+nav .hamburger .cross {
+  display: none;
+}
+
+nav .hamburger:hover line {
+  stroke: #ccc;
+}
+
+nav .menu div {
+  margin: 15px;
+}
+
+nav .menu {
+  height: 0;
+  display: block;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background-color: #000000dd;
+  z-index: 5000;
+  overflow: hidden;
 }
 
 .jumbo-wrapper {
@@ -244,4 +282,60 @@ circle.marker.inactive {
   margin: 5px 10px;
   font-size: 24px;
   text-align: center;
+}
+
+
+@media (max-width: 625px) {
+  .jumbo-wrapper {
+    display: none;
+  }
+
+  nav {
+    margin-bottom: 0;
+  }
+
+  nav ol {
+    display: none;
+  }
+
+  nav .hamburger {
+    display: block;
+  }
+
+  .main {
+    height: calc(100vh - 63px);
+    display: block;
+  }
+
+  #map {
+    width: 100vw;
+    height: 40%;
+  }
+
+  #sidepane {
+    width: 100vw;
+    height: calc(60% - 34px);
+    padding: 2px 0 0 7px;
+  }
+}
+
+@media (min-width: 626px) {
+  @media (max-height: 600px) {
+    .jumbo-wrapper {
+      display: none;
+    }
+
+    nav, nav ol {
+      margin-bottom: 0;
+    }
+
+    .main {
+      height: calc(100vh - 63px);
+    }
+
+    #sidepane {
+      padding: 2px 0 0 7px;
+      height: calc(100% - 23px);
+    }
+  }
 }
