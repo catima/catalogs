@@ -19,7 +19,7 @@
     </a>
     <ol>
       <li><a href="/rhone/fr">Cartes anciennes</a></li>
-      <li><a href="/rhone/fr/institutions-archivage">Institutions d'archivage</a></li>
+      <li><a href="/rhone/fr/institutions-conservation">Institutions de conservation</a></li>
     </ol>
     <div class="hamburger" style="text-align: right; margin: auto 20px auto auto;">
       <svg id="menu" xmlns='http://www.w3.org/2000/svg'
@@ -36,7 +36,7 @@
     </div>
     <div class="menu">
       <div><a href="/rhone/fr">Cartes anciennes</a></div>
-      <div><a href="/rhone/fr/institutions-archivage">Institutions d'archivage</a></div>
+      <div><a href="/rhone/fr/institutions-conservation">Institutions de conservation</a></div>
     </div>
   </nav>
 
@@ -67,12 +67,12 @@
         showMenu()
       }
     })
-  
+
   function showMenu () {
     d3.select('nav .menu')
       .transition()
       .style('height', '94px')
-      
+
     document.querySelector('.hamburger #menu').classList.add('hidden')
     document.querySelector('.hamburger #cross').classList.remove('hidden')
   }
@@ -81,7 +81,7 @@
     d3.select('nav .menu')
       .transition()
       .style('height', '0px')
-      
+
     document.querySelector('.hamburger #menu').classList.remove('hidden')
     document.querySelector('.hamburger #cross').classList.add('hidden')
   }

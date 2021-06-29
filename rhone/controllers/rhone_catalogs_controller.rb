@@ -17,21 +17,30 @@ class RhoneCatalogsController < CatalogsController
     geom_field = carte_item_type.find_field('centroide')
     img_field = carte_item_type.find_field('carte')
     period_field = carte_item_type.find_field('periode-temporelle')
+    keyword_field = carte_item_type.find_field('mot-cle')
 
     @cartes = ActiveRecord::Base.connection.execute("
-      SELECT 
+      SELECT
         id,
         (data ->> '#{title_field.uuid}') AS title,
         (data ->> '#{date_field.uuid}') AS date,
         ((data ->> '#{geom_field.uuid}')::jsonb -> 'features' -> 0 -> 'geometry' -> 'coordinates' ->> 0)::double precision AS lng,
         ((data ->> '#{geom_field.uuid}')::jsonb -> 'features' -> 0 -> 'geometry' -> 'coordinates' ->> 1)::double precision AS lat,
         (data ->> '#{img_field.uuid}')::jsonb ->> 'path' AS img_path,
-        (data ->> '#{period_field.uuid}')::jsonb AS periods
+        (data ->> '#{period_field.uuid}')::jsonb AS periods,
+        (data ->> '#{keyword_field.uuid}')::jsonb AS mots_cles_ids
       FROM items
       WHERE item_type_id = #{carte_item_type.id}
       ORDER BY data ->> '#{title_field.uuid}'
     ")
 
     @cartes_json = @cartes.to_json
+
+    # Get the list of keywords
+    keyword_choice_set = ChoiceSet.find(keyword_field.choice_set_id)
+    @keywords = keyword_choice_set.flat_ordered_choices.map { |d|
+      [d.id, d.short_name_translations['short_name_fr'], d.parent_id]
+    }
+    @keywords_json = @keywords.to_json
   end
 end

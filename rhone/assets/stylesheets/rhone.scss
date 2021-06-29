@@ -3,8 +3,11 @@ body {
   font-family: Arial, "Liberation Sans", sans-serif;
   font-size: 14px;
   background-color: #eae9e8;
-  overflow-y: hidden;
   overflow-x: auto;
+}
+
+body.search {
+  overflow-y: hidden;
 }
 
 nav {
@@ -170,6 +173,7 @@ nav .menu {
 }
 
 #sidepane {
+  position: relative;
   display: inline-block;
   width: 47vw;
   height: 100%;
@@ -284,6 +288,25 @@ circle.marker.inactive {
   text-align: center;
 }
 
+#searchDropdown {
+  position: absolute;
+  z-index: 10000;
+  background-color: #fff;
+  padding: 0 15px 7px 15px;
+  width: calc(100% - 60px);
+  border: 1px solid #ccc;
+  border-top: 1px solid #fff;
+  box-shadow: 5px 5px 5px #00000066;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  user-select: none;
+  cursor: pointer;
+}
+
+#searchDropdown div:hover {
+  color: #000;
+}
 
 @media (max-width: 625px) {
   .jumbo-wrapper {
