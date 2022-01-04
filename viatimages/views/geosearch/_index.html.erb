@@ -1,0 +1,104 @@
+<div id="mapsearchregions">
+  <div style="margin-top: 10px;">
+    <select class="sel_mapsearch" id="sel_regions" name="sel_regions">
+      <option value="" selected="selected">-- Régions --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_villes" name="sel_villes">
+      <option value="" selected="selected">-- Villes --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_vallees" name="sel_vallees">
+      <option value="" selected="selected">-- Vallées --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_chaines_montagnes" name="sel_chaines_montagnes">
+      <option value="" selected="selected">-- Chaînes montagneuses --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_cols" name="sel_cols">
+      <option value="" selected="selected">-- Cols --</option>
+    </select>
+    <select class="sel_mapsearch" id="sel_montagnes" name="sel_montagnes">
+      <option value="" selected="selected">-- Montagnes --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_lacs" name="sel_lacs">
+      <option value="" selected="selected">-- Lacs --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_cours_eau" name="sel_cours_eau">
+      <option value="" selected="selected">-- Cours d'eau --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_cascades" name="sel_cascades">
+      <option value="" selected="selected">-- Cascades --</option>
+    </select>
+
+    <select class="sel_mapsearch" id="sel_glaciers" name="sel_glaciers">
+      <option value="" selected="selected">-- Glaciers --</option>
+    </select><br>
+
+    <select id="sel_ouvrage_map" name="sel_ouvrage">
+      <option value="" selected="selected">Sélectionner un ouvrage</option>
+    </select>
+
+  </div>
+</div>
+
+<div id="map-wrapper">
+  <div id="map"></div>
+</div>
+
+<div id="map-outer" style="margin-top: 10px;">
+  <div style="float: left;">
+    <%= image_tag("attention-13px.gif", alt: "Attention") %>
+  </div>
+
+  <p style="color: #2e2e2a; margin-left: 22px;">
+    La géolocalisation exacte de toutes les images n'est pas certifiée<br>
+    Les images non géolocalisées n'apparaissent pas dans ce mode de recherche
+  </p>
+  <hr id="map-outer-border">
+</div>
+
+<script type="text/javascript">
+const M = {}
+
+const map = L.map("map", {
+  center: [46.7265, 8.171],
+  minZoom: 5,
+  zoom: 8,
+  zoomAnimation: true
+})
+
+M.map = map
+
+M.layers = {
+  topo: L.tileLayer(
+    'https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="http://www.esri.com">Esri</a>, HERE, Garmin, Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), (c) OpenStreetMap contributors, and the GIS User Community'
+    }
+  ),
+  img: L.tileLayer(
+    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/t\ile/{z}/{y}/{x}', {
+      attribution: '&copy; <a href="https://www.esri.com">Esri</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    }
+  )
+}
+
+M.layers.topo.addTo(M.map)
+
+L.control.layers(
+  {
+    "Carte": M.layers.topo,
+    "Photos aériennes": M.layers.img,
+  },
+  {},
+  {
+    position: 'topright'
+  }
+).addTo(M.map);
+
+
+</script>

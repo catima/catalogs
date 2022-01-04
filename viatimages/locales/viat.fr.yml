@@ -30,6 +30,9 @@ fr:
     show:
       viat-search-results-message_html: "<b>%{count_delimited}</b> images contenant <b>«%{query}»</b>"
       viat-no-search-criteria: "Aucun critère de recherche n'a été entré"
+  geosearch:
+    header:
+      viat-search-btn: Rechercher
   advanced_searches:
       show:
         viat-no-results: "Aucun résultat pour l'instant"
