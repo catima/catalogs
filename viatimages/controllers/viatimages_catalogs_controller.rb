@@ -22,8 +22,8 @@ class ViatimagesCatalogsController < CatalogsController
     # Make a single raw SQL query to avoid 20+ queries
     image_type_keyword_field = image_type.present? ? image_type.first.find_field('mot-cle') : nil
     keywords_attribute = image_type_keyword_field.uuid
-    keyword_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'keywords')
-    keyword_name_field = keyword_type.first.find_field('mot').uuid
+    keyword_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'keywords').first
+    keyword_name_field = keyword_type.find_field('mot').uuid
 
     keywords = ActiveRecord::Base.connection.execute("
       SELECT (I.data ->> '#{keyword_name_field}')::jsonb->'_translations'->>'#{I18n.locale}' AS keyword, n
@@ -32,13 +32,15 @@ class ViatimagesCatalogsController < CatalogsController
         WITH keyword_ids AS (
           SELECT jsonb_array_elements_text((data ->> '#{keywords_attribute}')::jsonb)::int AS kid
           FROM items
-          WHERE data -> '#{keywords_attribute}' IS NOT NULL
+          WHERE item_type_id = #{keyword_type.id}
+          AND data -> '#{keywords_attribute}' IS NOT NULL
         )
         SELECT kid, COUNT(*) AS n
         FROM keyword_ids
         GROUP BY kid
         LIMIT 20
       ) A ON I.id = A.kid
+      WHERE item_type_id = #{image_type.first.id}
       ORDER BY n DESC")
 
     @keywords = []

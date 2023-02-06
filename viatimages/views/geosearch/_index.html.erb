@@ -89,6 +89,8 @@ M.layers = {
 
 M.layers.topo.addTo(M.map)
 
+M.data = <%= raw @pts_json %>
+
 L.control.layers(
   {
     "Carte": M.layers.topo,
@@ -98,7 +100,18 @@ L.control.layers(
   {
     position: 'topright'
   }
-).addTo(M.map);
+).addTo(M.map)
+
+M.data.forEach(function (pt) {
+  const m = L.circleMarker(
+    [ pt.y, pt.x ],
+    { radius: 6, color: '#fff', weight: 0.5, fillColor: '#f00', fillOpacity: 0.7 }
+  )
+  .bindPopup(`<img width="150" src="/${pt.i}" /><p style="max-width: 150px;">${pt.t}</p>`)
+  .addTo(M.map)
+  m.imageId = pt.id
+})
+
 
 
 </script>
