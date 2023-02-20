@@ -17,7 +17,7 @@ de:
       viat-contacts: 'Kontakt'
       viat-legal: 'Rechtliches'
     user_menu:
-      viat_my_album: 'Mein album'
+      viat_my_album: 'Mein Album'
       viat_my_images: 'Meine Bilder'
     search:
       standard_search:
@@ -30,6 +30,9 @@ de:
     show:
       viat-search-results-message_html: "<b>%{count_delimited}</b> Bilder mit <b>«%{query}»</b>"
       viat-no-search-criteria: "Es wurden keine Suchkriterien eingegeben"
+  geosearch:
+    header:
+      viat-search-btn: Suchen
   advanced_searches:
       show:
         viat-no-results: "Zur Zeit kein Resultat"

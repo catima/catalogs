@@ -30,6 +30,9 @@ en:
     show:
       viat-search-results-message_html: "<b>%{count_delimited}</b> images containing <b>«%{query}»</b>"
       viat-no-search-criteria: 'No search criteria has been entered'
+  geosearch:
+    header:
+      viat-search-btn: Search
   advanced_searches:
       show:
         viat-no-results: "No result for the moment"

@@ -48,6 +48,7 @@
 
 <div id="map-wrapper">
   <div id="map"></div>
+  <div id="infobox"></div>
 </div>
 
 <div id="map-outer" style="margin-top: 10px;">
@@ -73,6 +74,15 @@ const map = L.map("map", {
 })
 
 M.map = map
+
+M.map.on('click', () => {
+  if (M.isMarkerEvent) {
+    M.isMarkerEvent = false
+    return
+  }
+
+  M.unselect()
+})
 
 M.layers = {
   topo: L.tileLayer(
@@ -102,16 +112,103 @@ L.control.layers(
   }
 ).addTo(M.map)
 
+M.selectedPoint = null
+
+M.select = function (pt) {
+  // Unselect previous marker
+  if (M.selectedPoint) M.unselect(false)
+
+  M.selectedPoint = pt
+
+  // Show infobox if it is not already displayed.
+  const ibox = document.getElementById('infobox')
+  const w = ibox.clientWidth
+
+  const imgUrl = pt.i.replace('upload/viatimages', '/thumbs/viatimages/250x250/resize')
+
+  let delay = 0
+
+  if (w < 5) {
+    ibox.style.marginLeft = '3px'
+    ibox.style.width = '300px'
+    ibox.style.padding = '16px'
+    delay = 500
+  }
+
+  const pathParts = window.location.pathname.split('/')
+  const lang = pathParts[2]
+
+  const detailsUrl = `/viatimages/${lang}/images/${pt.id}`
+
+  window.setTimeout(() => {
+    ibox.innerHTML = `
+      <p><a href="${detailsUrl}">${pt.t}</a></p>
+      <a href="${detailsUrl}"><img src="${imgUrl}" /></a>
+    `
+    M.map.invalidateSize({ pan: false, debounceMoveend: true })
+  }, delay)
+  
+  // Highlight the marker
+  pt.marker.setRadius(10)
+  pt.marker.setStyle({ fillColor: '#900', fillOpacity: 0.9 })
+  pt.marker.bringToFront()
+
+  // Make sure the clicked point is still visible.
+  const markerRect = pt.marker.getElement().getBoundingClientRect()
+  const mapRect = document.getElementById('map').getBoundingClientRect()
+  const mapXMax = mapRect.left + 638
+
+  const dx = mapXMax - markerRect.right
+  if (dx < 0) {
+    // We need to pan the map by at least dx pixels.
+    M.map.panBy([Math.abs(dx) + 20, 0], { animate: true, duration: 0.5 })
+  }
+}
+
+M.unselect = function (hideInfobox = true) {
+  if (M.selectedPoint === null) return
+
+  // Reset the marker style
+  const pt = M.selectedPoint
+  pt.marker.setRadius(6)
+  pt.marker.setStyle({ fillColor: '#f00', fillOpacity: 0.7 })
+
+  const ibox = document.getElementById('infobox')
+  ibox.innerHTML = ''
+
+  if (hideInfobox) {
+    ibox.style.marginLeft = 0
+    ibox.style.width = 0
+    ibox.style.padding = 0
+    window.setTimeout(() => {
+      M.map.invalidateSize({ pan: false, debounceMoveend: true })
+    }, 600)
+  }
+
+  M.selectedPoint = null
+}
+
+M.markerCluster = L.markerClusterGroup()
+
 M.data.forEach(function (pt) {
   const m = L.circleMarker(
     [ pt.y, pt.x ],
     { radius: 6, color: '#fff', weight: 0.5, fillColor: '#f00', fillOpacity: 0.7 }
   )
-  .bindPopup(`<img width="150" src="/${pt.i}" /><p style="max-width: 150px;">${pt.t}</p>`)
-  .addTo(M.map)
+
+  m.pt = pt
+
+  m.on('click', evt => {
+    M.isMarkerEvent = true
+    M.select(evt.target.pt)
+  })
+  
+  M.markerCluster.addLayer(m)
+  //m.addTo(M.map)
   m.imageId = pt.id
+  pt.marker = m
 })
 
-
+M.markerCluster.addTo(M.map)
 
 </script>
