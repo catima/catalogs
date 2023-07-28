@@ -2,11 +2,13 @@
 
 <h1>Littérature et culture matérielle (1830-2020)</h1>
 
+<div>
+</div>
+
 <div class="daily-object">
     <h2 class="daily-objet-title"><%= @daily_object_name %></h2>
     <div class="daily-objet-description">
-        <%# see https://stackoverflow.com/a/1958780/10914628 %>
-        <%= render html: @daily_object_description.html_safe %>
+        <%= truncate(strip_tags(@daily_object_description), length: 100, separator: ' ', omission: '...') %>
     </div>
     <a href="<%= @daily_object_url %>">Voir la fiche</a>
 </div>
