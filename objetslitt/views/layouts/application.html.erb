@@ -1,0 +1,19 @@
+<% content_for :title do %>
+  <title>Littérature et culture matérielle</title>
+<% end %>
+
+<% content_for :head do -%>
+  <%= stylesheet_link_tag("objetslitt", :media => "all") %>
+<% end -%>
+
+<%= render("shared/navbar") if catalog_scoped? %>
+
+<div class="container">
+  <%= render("shared/page_header") %>
+
+  <%= yield %>
+
+  <%= render("shared/footer") %>
+</div>
+
+<% parent_layout "base" %>
