@@ -1,7 +1,7 @@
 class ObjetslittCatalogsController < CatalogsController
     def show
         # Check if the object of the day's ID is already cached for today
-        object_id = Rails.cache.fetch("objetslitt_daily_objet_id", expires_in: 1.day) do
+        object_id = Rails.cache.fetch("objetslitt_daily_objet_id", expires_in: end_of_day) do
             # If the cache is not set or expired, get a new object and store its ID in the cache
             set_daily_objet_id
         end
@@ -12,6 +12,7 @@ class ObjetslittCatalogsController < CatalogsController
         if daily_object == nil
             return
         end
+
         # Display the daily object
         # Access the "nom" attribute from the random object
         @daily_object_name = daily_object.data["_ea331def_2f53_4840_a2ac_136cefe48ce5"]
@@ -31,5 +32,14 @@ class ObjetslittCatalogsController < CatalogsController
         random_objet = objets.sample
 
         random_objet.id
+    end
+
+    def end_of_day
+        # Make sure that the expiration for
+        # Calculate the time remaining until the end of the day (23:59:59)
+        seconds_until_end_of_day = Time.zone.now.end_of_day - Time.zone.now
+    
+        # Ensure the expiration time is within 24 hours to avoid cache buildup
+        [seconds_until_end_of_day, 24.hours].min
     end
 end
