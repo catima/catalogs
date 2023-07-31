@@ -1,0 +1,57 @@
+.daily-item {
+    padding: 1em;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 3px;
+    margin-left: 4em;
+    margin-right: 4em;
+
+    .daily-item-title {
+        margin-top: 0;
+    }
+
+    .daily-item-content {
+        display: flex;
+        flex-direction: row;
+
+        .daily-item-cover {
+            margin-right: 1em;
+            border-radius: 5px;
+
+            .daily-item-cover-image {
+                max-width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .daily-item-description {
+            color: rgb(63, 63, 63);
+        }
+    
+        .daily-item-link {
+            margin-left: auto;
+            margin-right: 0;
+            margin-top: 1em;
+        }
+    }
+}
+
+/* Mobile layout
+ * Aligning with bootstrap breakpoints
+ * see https://getbootstrap.com/docs/5.0/layout/breakpoints/
+ */
+ @media (max-width: 767.98px) {
+    .daily-item {
+        margin-left: 0;
+        margin-right: 0;
+
+        .daily-item-content {
+            flex-direction: column;
+
+            .daily-item-cover {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 1em;
+            }
+        }
+    }
+}

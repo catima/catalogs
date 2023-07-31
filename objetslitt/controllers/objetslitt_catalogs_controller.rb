@@ -7,9 +7,9 @@ class ObjetslittCatalogsController < CatalogsController
         end
     
         # Retrieve the object using the cached ID
-        daily_item = Item.find_by(id: item_id)
+        @daily_item = Item.find_by(id: item_id)
 
-        if daily_item == nil
+        if @daily_item == nil
             return
         end
 
@@ -23,18 +23,18 @@ class ObjetslittCatalogsController < CatalogsController
         cover = objet_type.first.find_field("cover").uuid
 
         # Access the data attribute from the random objet, using the UUIDs
-        @daily_item_name = daily_item.data[nom]
+        @daily_item_name = @daily_item.data[nom]
         # Access the "content" attribute of the JSON, which is an HTML snippet
         # (rendered in `views/catalogs/show.html.erb`)
-        @daily_item_description = JSON.parse(daily_item.data[descripfct])["content"]
-        @daily_item_cover = daily_item.data[cover]
+        @daily_item_description = JSON.parse(@daily_item.data[descripfct])["content"]
+        @daily_item_cover = @daily_item.data[cover]
 
         if @daily_item_cover != nil
             @daily_item_cover = "/" + @daily_item_cover["path"]
         end
 
         # Generate the URL to go see the object page
-        @daily_item_url = "/objetslitt/#{I18n.locale}/objets/#{daily_item.id}"
+        @daily_item_url = "/objetslitt/#{I18n.locale}/objets/#{@daily_item.id}"
     end
 
     private
@@ -52,11 +52,8 @@ class ObjetslittCatalogsController < CatalogsController
     end
 
     def time_until_end_of_day
-        # Make sure that the cached item ID expires every day at midnight.
+        # Makes sure that the cached item ID expires every day at midnight.
         # Calculate the time remaining until the end of the day (23:59:59)
-        seconds_until_end_of_day = Time.zone.now.end_of_day - Time.zone.now
-    
-        # Ensure the expiration time is within 24 hours to avoid cache buildup
-        [seconds_until_end_of_day, 24.hours].min
+        Time.zone.now.end_of_day - Time.zone.now
     end
 end
