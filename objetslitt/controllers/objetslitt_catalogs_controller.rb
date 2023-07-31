@@ -1,15 +1,15 @@
 class ObjetslittCatalogsController < CatalogsController
     def show
         # Check if the object of the day's ID is already cached for today
-        object_id = Rails.cache.fetch("objetslitt_daily_objet_id", expires_in: end_of_day) do
+        item_id = Rails.cache.fetch("objetslitt_daily_item_id", expires_in: time_until_end_of_day) do
             # If the cache is not set or expired, get a new object and store its ID in the cache
-            set_daily_objet_id
+            set_daily_item_id
         end
     
         # Retrieve the object using the cached ID
-        daily_object = Item.find_by(id: object_id)
+        daily_item = Item.find_by(id: item_id)
 
-        if daily_object == nil
+        if daily_item == nil
             return
         end
 
@@ -20,33 +20,39 @@ class ObjetslittCatalogsController < CatalogsController
         nom = objet_type.first.find_field("nom").uuid
         # Field "Description des fonctions textuelles"
         descripfct = objet_type.first.find_field("descripfct").uuid
+        cover = objet_type.first.find_field("cover").uuid
 
         # Access the data attribute from the random objet, using the UUIDs
-        @daily_object_name = daily_object.data[nom]
+        @daily_item_name = daily_item.data[nom]
         # Access the "content" attribute of the JSON, which is an HTML snippet
         # (rendered in `views/catalogs/show.html.erb`)
-        @daily_object_description = JSON.parse(daily_object.data[descripfct])["content"]
+        @daily_item_description = JSON.parse(daily_item.data[descripfct])["content"]
+        @daily_item_cover = daily_item.data[cover]
+
+        if @daily_item_cover != nil
+            @daily_item_cover = "/" + @daily_item_cover["path"]
+        end
 
         # Generate the URL to go see the object page
-        @daily_object_url = "/objetslitt/#{I18n.locale}/objets/#{daily_object.id}"
+        @daily_item_url = "/objetslitt/#{I18n.locale}/objets/#{daily_item.id}"
     end
 
     private
 
-    def set_daily_objet_id
+    def set_daily_item_id
         # Get the ItemType for the "objets" type
         objet_type = ItemType.where(catalog_id: @catalog.id).where(slug: "objets")
         # Get all the items of type "objets"
-        objets = Item.where(item_type_id: objet_type.ids.first)
+        items = Item.where(item_type_id: objet_type.ids.first)
 
         # Get a random object from all the objects
-        random_objet = objets.sample
+        random_item = items.sample
 
-        random_objet.id
+        random_item.id
     end
 
-    def end_of_day
-        # Make sure that the cached id expires every day at midnight.
+    def time_until_end_of_day
+        # Make sure that the cached item ID expires every day at midnight.
         # Calculate the time remaining until the end of the day (23:59:59)
         seconds_until_end_of_day = Time.zone.now.end_of_day - Time.zone.now
     
