@@ -5,6 +5,33 @@
 
 <div id="home">
 
+<div id="searchbox">
+    <!-- Standard search -->
+    <%= bootstrap_form_tag(
+        :url => { :controller => "simple_searches", :action => "new" },
+        :method => "GET",
+        :layout => :inline ) do |f| %>
+
+        <%= hidden_field_tag(:type, "objets") %>
+        <%= f.search_field(
+            :q,
+            :value => params[:q],
+            :label => "Recherche",
+            :hide_label => true,
+            :autofocus => false,
+            :class => "search-bar",
+            :placeholder => "Chercher un objet"
+        ) %>
+
+    <%= f.submit("Chercher", :class => 'btn btn-primary') %>
+    
+    <button class="btn">
+        <a href="/objetslitt/fr/search/advanced/new?item_type=objets">Avancé</a>
+    </button>
+
+    <% end %>
+</div>
+
 <div class="home-menu-container">
     <div class="home-menu-item">
         <a href="/objetslitt/fr/projet" class="home-menu-item-link">
@@ -48,47 +75,32 @@
     </div>
 </div>
 
-<div id="searchbox">
-    <!-- Standard search -->
-    <%= bootstrap_form_tag(
-        :url => { :controller => "simple_searches", :action => "new" },
-        :method => "GET",
-        :layout => :inline ) do |f| %>
-
-        <%= hidden_field_tag(:type, "objets") %>
-        <%= f.search_field(
-            :q,
-            :value => params[:q],
-            :label => "Recherche",
-            :hide_label => true,
-            :autofocus => false,
-            :class => "search-bar",
-            :placeholder => "Votre recherche"
-        ) %>
-
-    <%= f.submit("chercher", :class => 'btn btn-primary') %>
-    <% end %>
-</div>
-
 <div class="daily-item">
-    <h2 style="margin-top: 0;">Objet du jour</h2>
-    <h3 class="daily-item-title"><%= @daily_item_name %></h3>
-
-    <div class="daily-item-content">
-        <% if @daily_item_cover %>
+    <% if @daily_item_cover %>
         <div class="daily-item-cover">
             <img src="<%= @daily_item_cover %>" class="daily-item-cover-image">
         </div>
-        <% end %>
+    <% end %>
+
+    <div class="daily-item-content">
+        <h2 style="margin-top: 0;">Objet du jour</h2>
+        <h3 class="daily-item-title"><%= @daily_item_name %></h3>
 
         <div style="width: 100%;">
             <div class="daily-item-description">
-                <%= truncate(strip_tags(@daily_item_description), length: 400, separator: ' ', omission: '...') %>
+                <%= truncate(
+                    strip_tags(@daily_item_description),
+                    length: 400,
+                    separator: ' ',
+                    omission: '...'
+                ) %>
             </div>
 
             <div style="width: 75%;">
                 <a href="<%= @daily_item_url %>">
-                    <button class="daily-item-link btn btn-secondary">Voir la fiche</button>
+                    <button class="daily-item-link btn btn-secondary">
+                        Voir la fiche
+                    </button>
                 </a>
             </div>
         </div>
