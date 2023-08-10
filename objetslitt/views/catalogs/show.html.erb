@@ -5,33 +5,6 @@
 
 <div id="home">
 
-<div id="searchbox">
-    <!-- Standard search -->
-    <%= bootstrap_form_tag(
-        :url => { :controller => "simple_searches", :action => "new" },
-        :method => "GET",
-        :layout => :inline ) do |f| %>
-
-        <%= hidden_field_tag(:type, "objets") %>
-        <%= f.search_field(
-            :q,
-            :value => params[:q],
-            :label => "Recherche",
-            :hide_label => true,
-            :autofocus => false,
-            :class => "search-bar",
-            :placeholder => "Chercher un objet"
-        ) %>
-
-    <%= f.submit("Chercher", :class => 'btn btn-primary') %>
-    
-    <button class="btn">
-        <a href="/objetslitt/fr/search/advanced/new?item_type=objets">Avancé</a>
-    </button>
-
-    <% end %>
-</div>
-
 <div class="home-menu-container">
     <div class="home-menu-item">
         <a href="/objetslitt/fr/projet" class="home-menu-item-link">
