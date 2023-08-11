@@ -14,7 +14,7 @@
         :method => "GET",
         :layout => :inline ) do |f| %>
 
-        <%= hidden_field_tag(:type, "objets") %>
+        <%= hidden_field_tag(:type, "textes") %>
         <%= f.search_field(
             :q,
             :value => params[:q],
@@ -22,17 +22,19 @@
             :hide_label => true,
             :autofocus => false,
             :class => "search-bar",
-            :placeholder => "Chercher un objet"
+            :placeholder => "Chercher un texte"
         ) %>
 
     <%= f.submit("Chercher", :class => 'btn btn-primary') %>
 
     <button class="btn">
-        <a href="/objetslitt/fr/search/advanced/new?item_type=objets">Avancé</a>
+        <a href="/objetslitt/fr/search/advanced/new?item_type=textes">Avancé</a>
     </button>
 
 <% end %>
 </div>
+
+<%= render partial: "shared/daily_item" %>
 
 <a name="menu-donnees"></a>
 <div class="container">

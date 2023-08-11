@@ -1,53 +1,9 @@
-class ObjetslittCatalogsController < CatalogsController
-    def show
-        # Check if the attributes of the daily item are already cached for today
-        cached_data = Rails.cache.fetch("objetslitt_daily_item_data", expires_in: time_until_end_of_day) do
-            # If the cache is not set or expired, get a new object and store its data in the cache
-            set_daily_item_data
-        end
-    
-        if cached_data.nil?
-            return
-        end
-    
-        # Retrieve the cached data to display the daily object
-        @daily_item_name = cached_data[:name]
-        @daily_item_description = cached_data[:description]
-        @daily_item_cover = cached_data[:cover]
-        @daily_item_url = cached_data[:url]
-    end
-  
-    private
-  
-    def set_daily_item_data
-        # Get the ItemType for the "objets" type
-        objet_type = ItemType.where(catalog_id: @catalog.id).find_by(slug: "objets")
-    
-        # Get a random item of type "objets"
-        random_item = Item.where(item_type_id: objet_type.id).order("RANDOM()").limit(1).first
-    
-        return nil if random_item.nil?
+require_relative 'daily_item'
 
-        # Find fields UUIDS
-        nom = objet_type.find_field("nom").uuid
-        descripfct = objet_type.find_field("descripfct").uuid
-        cover = objet_type.find_field("cover").uuid
-    
-        # Extract the necessary attributes from the random item
-        data = {}
-        data[:name] = random_item.data[nom]
-        data[:description] = JSON.parse(random_item.data[descripfct])["content"]
-        cover_path = random_item.data[cover]&.dig("path")
-        data[:cover] = cover_path ? "/" + cover_path : nil
-        data[:url] = "/objetslitt/#{I18n.locale}/objets/#{random_item.id}"
-    
-        data
+class ObjetslittCatalogsController < CatalogsController
+    include DailyItem;
+
+    def show
+        @daily_item_data = fetch_daily_item_data
     end
-  
-    def time_until_end_of_day
-        # Makes sure that the cached item data expires every day at midnight.
-        # Calculate the time remaining until the end of the day (23:59:59)
-        Time.zone.now.end_of_day - Time.zone.now
-    end
-  end
-  
+end
