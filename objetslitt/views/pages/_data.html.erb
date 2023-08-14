@@ -1,3 +1,4 @@
+<%# Page "La base de données" %>
 <% provide(:title, @page.title) %>
 
 <a name="bandeau"></a>
@@ -22,7 +23,7 @@
             :hide_label => true,
             :autofocus => false,
             :class => "search-bar",
-            :placeholder => "Chercher un texte"
+            :placeholder => "Recherche"
         ) %>
 
     <%= f.submit("Chercher", :class => 'btn btn-primary') %>
@@ -35,27 +36,3 @@
 </div>
 
 <%= render partial: "shared/daily_item" %>
-
-<a name="menu-donnees"></a>
-<div class="container">
-<div class="row">
-    <div class="col-sm-4">
-        <h2>Textes</h2>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/touslestextes">Tous les textes</a></p>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/textessiecles">Textes par siècle</a></p>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/textepargenre">Textes par genre</a></p>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/textcrit">Textes critiques</a><br></p>    
-    </div>
-    <div class="col-sm-4">
-        <h2>Objets<br></h2>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/listeobjets">Objets en vrac</a></p>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/categobjet">Objets par fonction</a></p>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/objetsparfonction">Objets par fonction textuelle</a></p>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/systemobjetpage">Systèmes d'objets</a><br></p>    
-    </div>
-    <div class="col-sm-4">
-        <h2>Auteurs</h2>
-        <p><a href="https://catima.unil.ch/objetslitt/fr/auteur">Tous les auteurs</a><br></p>    
-    </div>
-</div>
-</div>
