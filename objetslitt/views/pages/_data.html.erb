@@ -1,38 +1,45 @@
-<%# Page "La base de données" %>
+<%# Override for the page "La base de données" %>
 <% provide(:title, @page.title) %>
 
 <a name="bandeau"></a>
 <p>
-<%= image_tag("maneki-neko-1200x700", alt: "Maneki Neko", :class => "banner-img") %>
+  <%= image_tag("maneki-neko-1200x700", alt: "Maneki Neko", :class => "banner-img") %>
 </p>
+
 <a name="texte-presentation"></a>
-<p>À partir des années 1830, avec les grandes mutations socio-économiques du capitalisme naissant et l'éclosion de ce qu'on appellera plus tard la société de consommation, la culture matérielle et plus spécifiquement le monde proliférant des objets entrent avec force en littérature.</p><p>À partir de l'essor de la littérature réaliste, au XIXe siècle, les objets occupent une place centrale dans une majorité de mouvements et d'esthétiques littéraires : la littérature fantastique, le roman policier, la littérature décadente, le surréalisme, le Nouveau Roman, la science-fiction, les genres autobiographiques et auto-fictionnels, etc.<br><br>Cette base de données vise à :</p><ol><li>établir un corpus de textes de 1830 à nos jours, dans lesquels les objets occupent une fonction déterminante ;</li><li>déterminer les fonctions et les modes d'existence de ces objets dans les textes. <br><br></li></ol>
+<p>À partir des années 1830, avec les grandes mutations socio-économiques du capitalisme naissant et l'éclosion de ce qu'on appellera plus tard la société de consommation, la culture matérielle et plus spécifiquement le monde proliférant des objets entrent avec force en littérature.</p>
+<p>À partir de l'essor de la littérature réaliste, au XIXe siècle, les objets occupent une place centrale dans une majorité de mouvements et d'esthétiques littéraires : la littérature fantastique, le roman policier, la littérature décadente, le surréalisme, le Nouveau Roman, la science-fiction, les genres autobiographiques et auto-fictionnels, etc.</p>
+<br>
+<p>Cette base de données vise à :</p>
+<ol>
+  <li>établir un corpus de textes de 1830 à nos jours, dans lesquels les objets occupent une fonction déterminante ;</li>
+  <li>déterminer les fonctions et les modes d'existence de ces objets dans les textes.</li>
+</ol>
 
 <div id="searchbox">
-    <!-- Standard search -->
-    <%= bootstrap_form_tag(
-        :url => { :controller => "simple_searches", :action => "new" },
-        :method => "GET",
-        :layout => :inline ) do |f| %>
+  <!-- Standard search -->
+  <%= bootstrap_form_tag(
+    :url => { :controller => "simple_searches", :action => "new" },
+    :method => "GET",
+    :layout => :inline ) do |f| %>
 
-        <%= hidden_field_tag(:type, "textes") %>
-        <%= f.search_field(
-            :q,
-            :value => params[:q],
-            :label => "Recherche",
-            :hide_label => true,
-            :autofocus => false,
-            :class => "search-bar",
-            :placeholder => "Recherche"
-        ) %>
-
+    <%= hidden_field_tag(:type, "textes") %>
+    <%= f.search_field(
+      :q,
+      :value => params[:q],
+      :label => "Recherche",
+      :hide_label => true,
+      :autofocus => false,
+      :class => "search-bar",
+      :placeholder => "Recherche"
+    ) %>
+  
     <%= f.submit("Chercher", :class => 'btn btn-primary') %>
 
     <button class="btn">
         <a href="/objetslitt/fr/search/advanced/new?item_type=textes">Avancé</a>
     </button>
-
-<% end %>
+  <% end %>
 </div>
 
 <%= render partial: "shared/daily_item" %>

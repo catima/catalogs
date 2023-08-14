@@ -1,8 +1,9 @@
 .daily-item {
     padding: 1em;
     border: 1px solid rgb(221, 221, 221);
-    border-radius: 3px;
+    border-radius: 5px;
     overflow: hidden;
+    margin-bottom: 2em;
 
     .daily-item-cover {
         margin: -1em -1em 1em -1em;
@@ -25,8 +26,6 @@
         }
     
         .daily-item-link {
-            margin-left: auto;
-            margin-right: 0;
             margin-top: 1em;
         }
     }

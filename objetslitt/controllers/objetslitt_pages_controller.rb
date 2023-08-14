@@ -1,7 +1,7 @@
 require_relative 'daily_item'
 
 class ObjetslittPagesController < PagesController
-    include DailyItem;
+  include DailyItem;
 
   def show
     @slug = request[:slug]

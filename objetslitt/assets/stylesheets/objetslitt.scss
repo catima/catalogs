@@ -13,14 +13,3 @@
     max-height: 300px;
     object-fit: cover;
 }
-
-/* Temp: trigger image precompile in dev */
-.compile-trigger {
-    background-image: image-url(fns-logo);
-    background-image: image-url(unil-logo);
-    background-image: image-url(chariot_320x200);
-    background-image: image-url(ballon_320x200);
-    background-image: image-url(mannequin_320x200);
-    background-image: image-url(livre_320x200);
-    background-image: image-url(maneki-neko-1200x700);
-}
