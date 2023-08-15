@@ -1,32 +1,13 @@
 <% if search_results.item_counts_by_type.many? %>
   <ul class="nav nav-tabs mb-3">
-    <%# Reorder the result tabs based on this custom list %>
-    <% preferred_type_slugs = ["textes", "objets", "extraits", "textcrit", "auteur"] %>
-
-    <% preferred_types = [] %>
-    <% found_types = {} %>
-    
-    <% search_results.item_counts_by_type do |type, count| %>
-      <% found_types[type.slug] = [type, count] %>
-    <% end %>
-    
-    <% preferred_type_slugs.each do |type_slug| %>
-      <% if found_types.key?(type_slug) %>
-        <% type, count = found_types[type_slug] %>
-        <% preferred_types << [type, count] %>
-      <% end %>
-    <% end %>
-
-    <% found_types.each do |slug, (type, count)| %>
-      <% next if preferred_type_slugs.include?(slug) %>
-      <% preferred_types << [type, count] %>
-    <% end %>
-    
-    <% preferred_types.each do |type, count| %>
+    <% @preferred_types.each do |type, count| %>
       <%= tag.li(
           :role => "presentation",
           :class => "nav-item") do %>
-        <%= link_to({type: type.slug, q: search_results.query}, class: ["nav-link", ("active" if search_results.active?(type))]) do %>
+        <%= link_to(
+          {type: type.slug, q: search_results.query},
+          class: ["nav-link", ("active" if search_results.active?(type))]
+        ) do %>
           <%= type.name_plural %>
           <% unless @catalog.requires_review %>
             <span class="badge badge-pill badge-secondary ml-2">

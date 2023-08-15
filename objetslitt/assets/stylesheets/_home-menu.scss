@@ -12,8 +12,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
     /* When an item is moused over, make the banner cover the image and
-         * make the overlay less translucent.
-         */
+     * make the overlay less translucent. */
     :hover {
       .home-menu-item-title {
         height: 100%;
