@@ -1,0 +1,50 @@
+<div class="page-header">
+  <% if @slug == "donnees"%>
+    <ul class="data-menu">
+      <%# Hardcoded special menu only for the "La base de données" page %>
+      <li class="nav-item dropdown">
+        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          Textes
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/objetslitt/fr/touslestextes">Tous les textes</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/textessiecles">Textes par siècle</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/textepargenre">Textes par genre</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/textcrit">Textes critiques</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          Objets
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/objetslitt/fr/listeobjets">Objets en vrac</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/categobjet">Objets par fonction</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/objetsparfonction">Objets par fonction textuelle</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/systemobjetpage">Systèmes d'objets</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          Auteurs
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/objetslitt/fr/auteur">Tous les auteurs</a>
+        </div>
+      </li>
+    </ul>
+  <% end %>
+
+  <% if content_for?(:title) %>
+    <h1 class="custom-style-title"><%= content_for(:title) %></h1>
+    <%= content_for(:page_subhead) %>
+  <% end %>
+</div>

@@ -1,90 +1,49 @@
 <script>
-  // Center the navlogo vertically.
-  var h = $('img.navlogo').height();
-  if (h > 0) {
-    var pad = (50 - h) / 2;
-    $('.navbar-header').css('padding-top', pad+'px');
-  }
+    // Center the navlogo vertically.
+    var h = $('img.navlogo').height();
+    if (h > 0) {
+        var pad = (50 - h) / 2;
+        $('.navbar-header').css('padding-top', pad+'px');
+    }
 </script>
 
 <div class="navbar-collapse collapse">
   <ul class="nav navbar-nav mr-auto">
-    <% if @slug == "donnees"%>
-      <%# Hardcoded special menu only for the "La base de données" page %>
-      <li class="nav-item dropdown">
-        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          Textes
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/touslestextes">Tous les textes</a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/textessiecles">Textes par siècle</a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/textepargenre">Textes par genre</a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/textcrit">Textes critiques</a>
-        </div>
-      </li>
 
-      <li class="nav-item dropdown">
-        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          Objets
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/listeobjets">Objets en vrac</a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/categobjet">Objets par fonction</a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/objetsparfonction">Objets par fonction textuelle</a>
-          <div role="separator" class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/systemobjetpage">Systèmes d'objets</a>
-        </div>
-      </li>
+    <% if catalog.menu_items.count > 0 %>
 
-      <li class="nav-item dropdown">
-        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          Auteurs
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="https://catima.unil.ch/objetslitt/fr/auteur">Tous les auteurs</a>
-        </div>
-      </li>
+      <% catalog.menu_items.where(parent_id:nil).sorted.each do |menu_item| %>
+        <% submenus = menu_item.submenus.load %>
+        <li class="nav-item <%= "dropdown" if submenus.count > 0 %> <%= "active" if menu_item_active?(menu_item, submenus: submenus) %>">
+          <a href="<%= menu_item.get_url %>" class="<%= "dropdown-toggle " if submenus.count > 0 %> nav-link" <% if submenus.count > 0 %> data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" <% end %> >
+            <%= menu_item.title %>
+            <% if submenus.count > 0 %><% end %>
+          </a>
+          <% if submenus.count > 0 %>
+            <div class="dropdown-menu">
+              <% submenus.each do |sub_menu| %>
+                <% if sub_menu.title == '---' %>
+                  <div role="separator" class="dropdown-divider"></div>
+                <% else %>
+                  <a class="dropdown-item <%= "active" if menu_item_active?(sub_menu) %>" href="<%= sub_menu.get_url %>"><%= sub_menu.title %></a>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
 
     <% else %>
 
-      <% if catalog.menu_items.count > 0 %>
-        <% catalog.menu_items.where(parent_id:nil).sorted.each do |menu_item| %>
-          <% submenus = menu_item.submenus.load %>
-          <li class="nav-item <%= "dropdown" if submenus.count > 0 %> <%= "active" if menu_item_active?(menu_item, submenus: submenus) %>">
-            <a href="<%= menu_item.get_url %>" class="<%= "dropdown-toggle " if submenus.count > 0 %> nav-link" <% if submenus.count > 0 %> data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" <% end %> >
-              <%= menu_item.title %>
-              <% if submenus.count > 0 %><% end %>
-            </a>
-            <% if submenus.count > 0 %>
-              <div class="dropdown-menu">
-                <% submenus.each do |sub_menu| %>
-                  <% if sub_menu.title == '---' %>
-                    <div role="separator" class="dropdown-divider"></div>
-                  <% else %>
-                    <a class="dropdown-item <%= "active" if menu_item_active?(sub_menu) %>" href="<%= sub_menu.get_url %>"><%= sub_menu.title %></a>
-                  <% end %>
-                <% end %>
-              </div>
-            <% end %>
-          </li>
-        <% end %>
-      <% else %>
-        <% catalog.item_types.sorted.each do |type| %>
-          <%= navbar_link_to(
-            type.name_plural,
-            items_path(:item_type_slug => type),
-            :active_when => { :item_type_slug => type.slug }
-          ) %>
-        <% end %>
+      <% catalog.item_types.sorted.each do |type| %>
+        <%= navbar_link_to(
+                type.name_plural,
+                items_path(:item_type_slug => type),
+                :active_when => { :item_type_slug => type.slug }) %>
       <% end %>
+
     <% end %>
   </ul>
-
   <ul class="nav navbar-nav">
     <%= render("shared/navbar/locale_menu") if params[:locale] %>
     <%= render("shared/navbar/admin_menu") if admin_menu_visible? %>
@@ -94,11 +53,14 @@
         fa_icon("question-circle")
       end %>
     </li>
+
     <%# Catalog-specific mailto in the navbar %>
     <li class="nav-item help">
-        <a href="mailto:lcm@unil.ch" class="nav-link" target="_blank">
-          <%= fa_icon("envelope") %>
-        </a>
+      <a href="mailto:lcm@unil.ch" class="nav-link" target="_blank">
+        <%= fa_icon("envelope") %>
+      </a>
     </li>
+    <%# End catalog-specific mailto %>
+
   </ul>
 </div><!--/.nav-collapse -->

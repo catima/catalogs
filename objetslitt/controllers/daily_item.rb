@@ -7,6 +7,8 @@ module DailyItem
     end
   end
 
+  private
+
   def set_daily_item_data
     # Get the ItemType for the "objets" type
     objet_type = ItemType.where(catalog_id: @catalog.id).find_by(slug: "objets")
