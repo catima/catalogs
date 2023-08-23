@@ -16,30 +16,4 @@
   <li>déterminer les fonctions et les modes d'existence de ces objets dans les textes.</li>
 </ol>
 
-<div id="searchbox">
-  <!-- Standard search -->
-  <%= bootstrap_form_tag(
-    :url => { :controller => "simple_searches", :action => "new" },
-    :method => "GET",
-    :layout => :inline ) do |f| %>
-
-    <%= hidden_field_tag(:type, "textes") %>
-    <%= f.search_field(
-      :q,
-      :value => params[:q],
-      :label => "Recherche",
-      :hide_label => true,
-      :autofocus => false,
-      :class => "search-bar",
-      :placeholder => "Recherche"
-    ) %>
-  
-    <%= f.submit("Chercher", :class => 'btn btn-primary') %>
-
-    <button class="btn">
-        <a href="/objetslitt/fr/search/advanced/new?item_type=textes">Avancé</a>
-    </button>
-  <% end %>
-</div>
-
 <%= render partial: "shared/daily_item" %>
