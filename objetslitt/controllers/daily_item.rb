@@ -26,10 +26,15 @@ module DailyItem
     # Extract the necessary attributes from the random item
     data = {}
     data[:name] = random_item.data[nom]
-    data[:description] = JSON.parse(random_item.data[descripfct])["content"]
     cover_path = random_item.data[cover]&.dig("path")
     data[:cover] = cover_path ? "/" + cover_path : nil
     data[:url] = "/objetslitt/#{I18n.locale}/objets/#{random_item.id}"
+    # descripfct is an optional field. Therefore, check if it's present
+    if random_item.data.key?(descripfct) && !random_item.data[descripfct].empty?
+      data[:description] = JSON.parse(random_item.data[descripfct])["content"]
+    else
+      data[:description] = "Description indisponible."
+    end
 
     data
   end
