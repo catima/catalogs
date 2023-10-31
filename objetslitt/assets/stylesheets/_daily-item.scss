@@ -4,21 +4,24 @@
   border-radius: 5px;
   overflow: hidden;
   margin-bottom: 2em;
+  display: flex;
 
   .daily-item-cover {
-    margin: -1em -1em 1em -1em;
+    margin: -1em 1.5em -1em -1em;
+    max-width: 33%;
 
     .daily-item-cover-image {
-      height: 400px;
-      width: 100%;
+      max-width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
 
   .daily-item-content {
     h2 {
-        margin-top: 0;
+      margin-top: 0;
     }
+
     .daily-item-title {
       margin-top: 0;
     }
@@ -38,10 +41,19 @@
  * see https://getbootstrap.com/docs/5.0/layout/breakpoints/
  */
 @media (max-width: 767.98px) {
-  .daily-item .daily-item-cover {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1em;
+  // Make the cover image and content display as a column
+  .daily-item {
+    flex-direction: column;
+
+    .daily-item-cover {
+      max-width: none;
+      margin: -1em -1em 1em -1em;
+
+      .daily-item-cover-image {
+        height: 200px;
+        width: 100%;
+      }
+    }
   }
 }
 
