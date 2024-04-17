@@ -70,8 +70,8 @@ class ViatimagesItemsController < ItemsController
         @illustration_composee = field if field.slug == "illustration-composee"
         @planche_depliante = field if field.slug == "planche-depliante"
         @en_couleur = field if field.slug == "en-couleurs"
-        @largeur = field if field.slug == "largeur"
-        @hauteur = field if field.slug == "hauteur"
+        @largeur = field if field.slug == "original-width-mm"
+        @hauteur = field if field.slug == "original-height-mm"
         @echelle_origine = field if field.slug == "echelle-origine"
         @emplacement = field if field.slug == "emplacement"
         @emplacement_ouvrage = field if field.slug == "emplacement-dans-ouvrage"
@@ -96,6 +96,13 @@ class ViatimagesItemsController < ItemsController
       if @geographie
         # regroup all geography values by feature-class
         @geographie_sorted = @item.get_value(@geographie).group_by{|item| item.item_type.find_field('geo-feature-class').raw_value(item)}.values
+      end
+
+      if @corpus
+        # define edition date by formatting date-edition-debut and date-edition-fin
+        date_debut = field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-debut'))
+        date_fin = field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-fin'))
+        @date_edition = date_debut && date_fin ? "#{date_debut}-#{date_fin}" : date_debut || date_fin
       end
     end
 

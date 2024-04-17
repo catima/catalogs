@@ -54,8 +54,8 @@
                 <span><%= t(".viat-original-source") %></span>
                 <div id="ouvrageSource">
                   <%= field_value(@item, @corpus) %>
-                  <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-debut'))).present? %>
-                    <%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-debut')) %>
+                  <% if @date_edition %>
+                    <%= @date_edition %>
                   <% end %>
                   <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('nombre-illustrations'))).present? %>
                     <%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('nombre-illustrations')) %> illustrations
@@ -93,7 +93,7 @@
                 <tr>
                   <td>
                     <div id="caracteristiquesGenerales" class="info">
-                      <%= strip_tags(field_value(@item, @critere_technique)).titleize if @critere_technique && strip_tags(field_value(@item, @critere_technique)).present? %>
+                      <%= field_value(@item, @critere_technique) if @critere_technique && strip_tags(field_value(@item, @critere_technique)).present? %>
                       <% if @illustration_composee && strip_tags(field_value(@item, @illustration_composee)).present? %>
                         <% if @yes === strip_tags(field_value(@item, @illustration_composee)) %>
                           <%= @illustration_composee.label %>
