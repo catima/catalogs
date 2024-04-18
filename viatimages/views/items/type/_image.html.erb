@@ -8,15 +8,15 @@
               <%= field_value(@item, @image, :size => @image_size) %>
             <% end %>
 
-            <% if @texte_image && strip_tags(field_value(@item, @texte_image)).present? %>
+            <% if @texte_dans_image && strip_tags(field_value(@item, @texte_dans_image)).present? %>
               <div id="imgToolbar">
                 <p class="info">
                   <a id ="texteImageLabel" href="#">
-                    <span><%= @texte_image.label %></span><%= image_tag("arrow-expand.gif", :id => "arrowtexteImage", :class => "info-toggle-img") %>
+                    <span><%= @texte_dans_image.label %></span><%= image_tag("arrow-expand.gif", :id => "arrowtexteImage", :class => "info-toggle-img") %>
                   </a>
                 </p>
                 <div id="texteImage">
-                  <%= field_value(@item, @texte_image) %>
+                  <%= field_value(@item, @texte_dans_image) %>
                 </div>
               </div>
             <% end %>
@@ -76,7 +76,7 @@
             <% if @description && strip_tags(field_value(@item, @description)).present? %>
               <div class="info">
                 <span><%= @description.label %></span><br>
-                <%= field_value(@item, @description) %>
+                <%= field_value(@item, @description).html_safe %>
               </div>
             <% end %>
 
@@ -155,8 +155,8 @@
               </table>
             </div>
 
-            <% if (@remarque && strip_tags(field_value(@item, @remarque)).present?) ||
-              (@lieu_edition_image && strip_tags(field_value(@item, @lieu_edition_image)).present?) ||
+            <% if (@remarques && strip_tags(field_value(@item, @remarques)).present?) ||
+              (@image_lieu_edition && strip_tags(field_value(@item, @image_lieu_edition)).present?) ||
               (@date_evenement && strip_tags(field_value(@item, @date_evenement)).present?) %>
               <p class="info">
                 <a id ="remarquesLabel" href="#">
@@ -166,16 +166,16 @@
                 </a>
               </p>
               <div id="remarques">
-                <% if @remarque && strip_tags(field_value(@item, @remarque)).present? %>
+                <% if @remarques && strip_tags(field_value(@item, @remarques)).present? %>
                   <p class="info">
                     <span><%= t(".viat-researcher-comments") %></span><br>
-                    <%= field_value(@item, @remarque) %>
+                    <%= field_value(@item, @remarques) %>
                   </p>
                 <% end %>
-                <% if @lieu_edition_image && strip_tags(field_value(@item, @lieu_edition_image)).present? %>
+                <% if @image_lieu_edition && strip_tags(field_value(@item, @image_lieu_edition)).present? %>
                   <p class="info">
-                    <span><%= @lieu_edition_image.label %></span><br>
-                    <%= field_value(@item, @lieu_edition_image) %>
+                    <span><%= @image_lieu_edition.label %></span><br>
+                    <%= field_value(@item, @image_lieu_edition) %>
                   </p>
                 <% end %>
                 <% if @date_evenement && strip_tags(field_value(@item, @date_evenement)).present? %>

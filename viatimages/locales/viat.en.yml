@@ -47,7 +47,8 @@ en:
           viat-online-book-collection: "Online book or collection"
           viat-consult: "Consult"
           viat-description: "Description"
-          viat-title-images: "%{images_count} images for the book: «%{corpus_title}»"
+          viat-edition-date: "Publishing date"
+          viat-title-images_html: "%{images_count} images for the book: «%{corpus_title}»"
           viat-view-more: "View more"
         image:
           viat-illustrators: "Illustrators"
