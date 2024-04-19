@@ -195,8 +195,8 @@
 </table>
 
 <ul class="nav nav-tabs nav-justified" id="image-tabs" role="tablist">
-  <li class="nav-item active">
-    <a class="nav-link" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true"><%= t(".viat-details") %></a>
+  <li class="nav-item">
+    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true"><%= t(".viat-details") %></a>
   </li>
   <% if @location && field_value(@item, @location).present? %>
     <li class="nav-item">
@@ -204,27 +204,32 @@
     </li>
   <% end %>
 </ul>
-
 <div class="tab-content" id="image-item-tabs-content">
-  <div class="tab-pane show fade active" id="details" role="tabpanel" aria-labelledby="details-tab">
+  <div class="tab-pane show fade active" id="details" role="tabpanel" aria-labelledby="nav-details-tab">
     <table>
       <tbody>
         <tr>
           <td>
             <% if @domaine && strip_tags(field_value(@item, @domaine)).present? %>
-              <p class="info"><span><%= @domaine.label %></span><br>
-                <%= field_value(@item, @domaine) %>
-              </p>
+              <div class="info">
+                <span><%= @domaine.label %></span>
+              </div>
+              <%= field_value(@item, @domaine) %>
             <% end %>
             <% if @keyword && strip_tags(field_value(@item, @keyword)).present? %>
-              <p class="info mots-cles"><span><%= @keyword.label %></span><br>
+              <div class="info">
+                <span><%= @keyword.label %></span>
+              </div>
+              <div class="mots-cles">
                 <%= field_value(@item, @keyword) %>
-              </p>
+              </div>
             <% end %>
           </td>
           <td>
             <% if @geographie && strip_tags(field_value(@item, @geographie)).present? %>
-              <p class="info"><span><%= @geographie.label %></span></p>
+              <p class="info">
+                <span><%= @geographie.label %></span>
+              </p>
               <% @geographie_sorted.each do |geo_group| %>
                 <p class="info">
                   <%= strip_tags(field_value(geo_group.first, geo_group.first.item_type.find_field('geo-feature-class'))) %>:
@@ -237,16 +242,17 @@
           </td>
           <td>
             <% if @texte_legende && strip_tags(field_value(@item, @texte_legende)).present? %>
-              <p class="info"><span><%= t(".viat-legend") %></span><br>
-                <%= field_value(@item, @texte_legende) %>
-              </p>
+              <div class="info">
+                <span><%= t(".viat-legend") %></span>
+              </div>
+              <%= field_value(@item, @texte_legende) %>
             <% end %>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="tab-pane fade" id="carte" role="tabpanel" aria-labelledby="carte-tab">
+  <div class="tab-pane fade" id="carte" role="tabpanel" aria-labelledby="nav-carte-tab">
     <% if @location && field_value(@item, @location).present? %>
       <div id="carte-content">
         <%= field_value(@item, @location) %>

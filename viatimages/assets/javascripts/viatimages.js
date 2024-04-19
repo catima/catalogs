@@ -20,7 +20,7 @@ $(document).ready(function() {
   $("a#caracteristiquesLabel").click(function(e) {
     e.preventDefault()
     d = $('#caracteristiques').css('display');
-    if (d == 'none') {
+    if (d === 'none') {
       document.getElementById('arrowCaracteristiquesExpand').classList.add('hidden')
       document.getElementById('arrowCaracteristiquesCollapse').classList.remove('hidden')
     } else {
@@ -33,7 +33,7 @@ $(document).ready(function() {
   $("a#remarquesLabel").click(function(e) {
     e.preventDefault()
     d = $('#remarques').css('display');
-    if (d == 'none') {
+    if (d === 'none') {
       document.getElementById('arrowRemarquesExpand').classList.add('hidden')
       document.getElementById('arrowRemarquesCollapse').classList.remove('hidden')
     } else {
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
   $("a#texteImageLabel").click(function() {
     d = $('#texteImage').css('display');
-    if (d == 'none') {
+    if (d === 'none') {
         $('#arrowtexteImage').attr('src', '/assets/arrow-collapse.gif');
     } else {
         $('#arrowtexteImage').attr('src', '/assets/arrow-expand.gif');
