@@ -8,8 +8,36 @@
               <%= field_value(@item, @image, :size => @image_size) %>
             <% end %>
 
-            <% if @texte_dans_image && strip_tags(field_value(@item, @texte_dans_image)).present? %>
-              <div id="imgToolbar">
+            <div id="imgToolbar">
+              <div id="imgActions">
+                <% if exists_for_user?(@item) %>
+                  <%= link_to(
+                        image_tag("fav-on.gif", alt: t("items.buttons.favorites_remove"), :class => "fav-card"),
+                        favorite_path(I18n.locale, @item),
+                        :class => "favorites-remove",
+                        :title => t("items.buttons.favorites_remove"),
+                        method: :delete
+                      ) %>
+                <% else %>
+                  <%= link_to(
+                        image_tag("fav-off.gif", alt: t("items.buttons.favorites_add"), :class => "fav-card"),
+                        favorites_path(I18n.locale, id: @item.id),
+                        :class => "favorites-add",
+                        :title => t("items.buttons.favorites_add"),
+                        method: :post
+                      ) %>
+                <% end %>
+                <% if policy(@item).edit? %>
+                  <%= link_to(
+                        image_tag("edit.gif", alt: t("edit"), :class => "fav-card"),
+                        edit_catalog_admin_item_path(@item.catalog, I18n.locale, @item.item_type, @item),
+                        :title => t("edit"),
+                        :target => '_blank'
+                      ) %>
+                <% end %>
+              </div>
+
+              <% if @texte_dans_image && strip_tags(field_value(@item, @texte_dans_image)).present? %>
                 <p class="info">
                   <a id ="texteImageLabel" href="#">
                     <span><%= @texte_dans_image.label %></span><%= image_tag("arrow-expand.gif", :id => "arrowtexteImage", :class => "info-toggle-img") %>
@@ -18,8 +46,8 @@
                 <div id="texteImage">
                   <%= field_value(@item, @texte_dans_image) %>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
 
             <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('etablissement'))).present? %>
               <div class="hidden" id="imageLegendEtablissment"><%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('etablissement')) %></div>
