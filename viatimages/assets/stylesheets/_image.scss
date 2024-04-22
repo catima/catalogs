@@ -11,8 +11,15 @@
   padding-right: 18px;
 }
 #image-content {
-  margin-top: -40px;
-  margin-left: 30px;
+  margin: -40px auto 0 auto;
+  min-width: 422px;
+  text-align: center;
+}
+#imgToolbar {
+  margin-bottom: 10px;
+}
+#imgActions {
+  margin-bottom: 10px;
 }
 .img-enlarge {
   display: none;
@@ -141,14 +148,6 @@
 }
 #emplacementOuvrage {
   padding-left: 30px;
-}
-#imgToolbar {
-  width: 100%;
-  text-align: left;
-  margin-bottom: 10px;
-}
-#imgActions {
-  margin-bottom: 10px;
 }
 #textesAuteurs {
   margin-bottom: 5px;

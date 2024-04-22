@@ -55,14 +55,14 @@
             <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('droit-utilisation'))).present? %>
               <div class="hidden" id="imageLegendDroits"><%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('droit-utilisation')) %></div>
             <% end %>
-
-            <% if @image_id && strip_tags(field_value(@item, @image_id)).present? %>
-              <div id="info-wrapper">
-                <hr>
-                <p id="info-content"><span><%= t(".viat-permanent-url") %>:</span> https://purl.org/viatimages/<%= params[:locale] %>/image/<%= @image_id.raw_value(@item) %></p>
-              </div>
-            <% end %>
           </div>
+
+          <% if @image_id && strip_tags(field_value(@item, @image_id)).present? %>
+            <div id="info-wrapper">
+              <hr>
+              <p id="info-content"><span><%= t(".viat-permanent-url") %>:</span> https://purl.org/viatimages/<%= params[:locale] %>/image/<%= @image_id.raw_value(@item) %></p>
+            </div>
+          <% end %>
         </div>
       </td>
       <td id="description-column">
