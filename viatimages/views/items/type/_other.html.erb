@@ -2,30 +2,25 @@
 
 <%= render_item_list_nav(item_list, @item) if item_list %>
 
-<table class="table item-table">
-  <tbody>
-    <% @item.applicable_fields.each do |field| %>
-      <% if field_check_display(@item, field) %>
-        <tr>
-          <th><%= field.label %></th>
-            <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
-        </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
-
 <% fields_and_item_references(@item) do |field, browse| %>
-  <h3><%= field.item_type.name_plural %></h3>
+  <div class="separator">
+    <span class="list-title">
+      <%= t(".viat-search-results-message_html",
+            :query => @item.default_display_name.capitalize,
+            :type => field.item_type.name_plural.downcase,
+            :count_delimited => browse.total_count) %>
+    </span>
+  </div>
+
   <%= render_item_list(browse) %>
   <% if browse.more? %>
     <%= link_to(items_path(
           :item_type_slug => browse.item_type,
           browse.field.slug => browse.value
         )) do %>
-      <%# TODO: i18n %>
-      <%= t(".viat-view-more") %>
-      (<%= pluralize(browse.total_count, "item") %>)
+      <div class="mt-2">
+        <%= t(".viat-view-more") %>...
+      </div>
     <% end %>
   <% end %>
 <% end %>

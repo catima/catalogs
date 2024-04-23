@@ -1,4 +1,4 @@
-<div id="ouvrage">
+<div class="separator">
   <% if @titre && strip_tags(field_value(@item, @titre)).present? %>
     <h2 id="titreOuvrage"><%= field_value(@item, @titre) %></h2>
   <% end %>
@@ -90,7 +90,7 @@
     </p>
   </div>
 
-  <span class="searchmsg">
+  <span class="list-title">
      <%= t(".viat-title-images_html",
            :images_count => @images_count,
            :corpus_title => @item.get_value('titre')) %>

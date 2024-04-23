@@ -5,8 +5,19 @@ body {
   line-height: inherit;
 }
 
+b {
+  font-family: 'Avenir Black', sans-serif;
+  font-weight: bold;
+}
+
 .hidden {
   display: none;
+}
+
+.separator {
+  border-bottom: 1px solid #dddddd;
+  margin: 20px 0 35px 0;
+  padding-bottom: 25px;
 }
 
 #menu-separator {

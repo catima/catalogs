@@ -48,7 +48,7 @@ de:
           viat-consult: "Konsultieren"
           viat-description: "Beschreibung"
           viat-edition-date: "Datum der Auflage"
-          viat-title-images_html: "%{images_count} Bilder für das Werk: «%{corpus_title}»"
+          viat-title-images_html: "<b>%{images_count}</b> Bilder für das Werk: <b>«%{corpus_title}»</b>"
           viat-view-more: "Mehr sehen"
         image:
           viat-illustrators: "Illustratoren"
@@ -67,4 +67,5 @@ de:
           viat-download-pdf: "Als PDF herunterladen"
           viat-document: "Dokument"
         other:
+          viat-search-results-message_html: "<b>%{count_delimited}</b> %{type} mit <b>«%{query}»</b>"
           viat-view-more: "Mehr sehen"

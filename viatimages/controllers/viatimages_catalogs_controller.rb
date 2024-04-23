@@ -26,7 +26,10 @@ class ViatimagesCatalogsController < CatalogsController
     keyword_name_field = keyword_type.first.find_field('mot').uuid
 
     keywords = ActiveRecord::Base.connection.execute("
-      SELECT (I.data ->> '#{keyword_name_field}')::jsonb->'_translations'->>'#{I18n.locale}' AS keyword, n
+      SELECT
+        A.kid AS id,
+        (I.data ->> '#{keyword_name_field}')::jsonb->'_translations'->>'#{I18n.locale}' AS keyword,
+        n
       FROM items I
       JOIN (
         WITH keyword_ids AS (
@@ -44,9 +47,9 @@ class ViatimagesCatalogsController < CatalogsController
     @keywords = []
     keyword_size_classes = ['largest', 'large', 'medium', 'small']
     keywords.each_with_index do |kw, idx|
-      @keywords.push([kw['keyword'], keyword_size_classes[idx / 5]])
+      @keywords.push("id" => kw['id'], "name" => kw['keyword'], "size" => keyword_size_classes[idx / 5])
     end
-    @keywords.sort_by! { |v| v[0] }
-    @keywords_base_url = [I18n.locale, "search?utf8=✓&type=images&q="].join("/")
+    @keywords.sort_by! { |v| v['name'] }
+    @keywords_base_url = [I18n.locale, "keywords"].join("/")
   end
 end
