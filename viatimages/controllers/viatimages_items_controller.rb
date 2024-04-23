@@ -15,32 +15,44 @@ class ViatimagesItemsController < ItemsController
       @corpus = Item.where(id: params['corpus']).first
 
       @corpus.applicable_fields.each do |field|
-          @titre = field if field.slug == "titre"
-          #@titre_trad = field if field.slug == "titre-traduit"
-          @titre_long = field if field.slug == "titre-long"
-          @lieu_edition = field if field.slug == "lieu-edition"
-          @editeur = field if field.slug == "editeur"
-          #@personne_associee = field if field.slug == "personne-associee"
-          @siecle_edition = field if field.slug == "siecle-edition"
-          @siecle_voyage = field if field.slug == "siecle-voyage"
-          @date_edition_debut = field if field.slug == "date-edition-debut"
-          @date_edition_fin = field if field.slug == "date-edition-fin"
-          @format = field if field.slug == "format"
-          @tome = field if field.slug == "tome"
-          @nombre_illustrations = field if field.slug == "nombre-illustrations"
-          @cote = field if field.slug == "cote"
-          @url_catalogue = field if field.slug == "url-catalogue"
-          @remarques = field if field.slug == "remarques"
-          #@textes_online = field if field.slug == "textes-online"
-          @collection_ouvrage = field if field.slug == "collection-ouvrage"
-          @langue_ouvrage = field if field.slug == "langue-ouvrage"
-          @autres_editions = field if field.slug == "autres-editions"
-          @provenance_collection = field if field.slug == "provenance"
-          @description_collection = field if field.slug == "description"
-        end
+        @titre = field if field.slug == "titre"
+        #@titre_trad = field if field.slug == "titre-traduit"
+        @titre_long = field if field.slug == "titre-long"
+        @lieu_edition = field if field.slug == "lieu-edition"
+        @editeur = field if field.slug == "editeur"
+        #@personne_associee = field if field.slug == "personne-associee"
+        @siecle_edition = field if field.slug == "siecle-edition"
+        @siecle_voyage = field if field.slug == "siecle-voyage"
+        @date_edition_debut = field if field.slug == "date-edition-debut"
+        @date_edition_fin = field if field.slug == "date-edition-fin"
+        @format = field if field.slug == "format"
+        @tome = field if field.slug == "tome"
+        @nombre_illustrations = field if field.slug == "nombre-illustrations"
+        @cote = field if field.slug == "cote"
+        @url_catalogue = field if field.slug == "url-catalogue"
+        @remarques = field if field.slug == "remarques"
+        #@textes_online = field if field.slug == "textes-online"
+        @collection_ouvrage = field if field.slug == "collection-ouvrage"
+        @langue_ouvrage = field if field.slug == "langue-ouvrage"
+        @autres_editions = field if field.slug == "autres-editions"
+        @provenance_collection = field if field.slug == "provenance"
+        @description_collection = field if field.slug == "description"
+      end
 
-        @etablissement = @corpus.get_value('etablissement')
-        fields_and_item_references(@corpus) do |_, browse| @images_count = browse.total_count end
+      if @date_edition_debut || @date_edition_fin
+        date_edition_debut = field_value(@corpus, @date_edition_debut)
+        date_edition_fin = field_value(@corpus, @date_edition_fin)
+        @date_edition = if date_edition_debut == date_edition_fin
+                          date_edition_debut
+                        elsif date_edition_debut && date_edition_fin
+                          "#{date_edition_debut}-#{date_edition_fin}"
+                        else
+                          date_edition_debut || date_edition_fin
+                        end
+      end
+
+      @etablissement = @corpus.get_value('etablissement')
+      fields_and_item_references(@corpus) do |_, browse| @images_count = browse.total_count end
     end
   end
 
@@ -56,7 +68,7 @@ class ViatimagesItemsController < ItemsController
     # Prepare some objects for showing the image list (item type "images")
     if @item_type.slug == "images"
       @item.applicable_fields.each do |field|
-        @image_id = field if field.slug == "image-id"
+        @image_id = field if field.slug == "id-image"
         @image = field if field.slug == "image"
         @texte_dans_image = field if field.slug == "texte-dans-image"
         @titre_original = field if field.slug == "titre-original"
@@ -70,8 +82,8 @@ class ViatimagesItemsController < ItemsController
         @illustration_composee = field if field.slug == "illustration-composee"
         @planche_depliante = field if field.slug == "planche-depliante"
         @en_couleur = field if field.slug == "en-couleurs"
-        @largeur = field if field.slug == "largeur"
-        @hauteur = field if field.slug == "hauteur"
+        @largeur = field if field.slug == "original-width-mm"
+        @hauteur = field if field.slug == "original-height-mm"
         @echelle_origine = field if field.slug == "echelle-origine"
         @emplacement = field if field.slug == "emplacement"
         @emplacement_ouvrage = field if field.slug == "emplacement-dans-ouvrage"
@@ -96,6 +108,19 @@ class ViatimagesItemsController < ItemsController
       if @geographie
         # regroup all geography values by feature-class
         @geographie_sorted = @item.get_value(@geographie).group_by{|item| item.item_type.find_field('geo-feature-class').raw_value(item)}.values
+      end
+
+      if @corpus
+        # define edition date by formatting date-edition-debut and date-edition-fin
+        date_debut = field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-debut'))
+        date_fin = field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-fin'))
+        @date_edition = if date_debut == date_fin
+                          date_debut
+                        elsif date_debut && date_fin
+                          "#{date_debut}-#{date_fin}"
+                        else
+                          date_debut || date_fin
+                        end
       end
     end
 

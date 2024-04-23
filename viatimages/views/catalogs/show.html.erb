@@ -58,11 +58,9 @@
 
       <div id="tagcloud">
         <% if @keywords %>
-          <% @keywords.each do | keyword, style | %>
-            <span class="tag <%= style %>">
-              <a href="<%= @keywords_base_url + keyword %>">
-                <%= keyword %>
-              </a>
+          <% @keywords.each do |keyword| %>
+            <span class="tag <%= keyword['size'] %>">
+              <%= link_to keyword['name'], "#{@keywords_base_url}/#{keyword['id']}-#{keyword['name']}" %>
             </span>
           <% end %>
         <% end %>

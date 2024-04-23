@@ -50,7 +50,8 @@ en:
           viat-online-book-collection: "Online book or collection"
           viat-consult: "Consult"
           viat-description: "Description"
-          viat-title-images: "%{images_count} images for the book: «%{corpus_title}»"
+          viat-edition-date: "Publishing date"
+          viat-title-images_html: "<b>%{images_count}</b> images for the book: <b>«%{corpus_title}»</b>"
           viat-view-more: "View more"
         image:
           viat-illustrators: "Illustrators"
@@ -69,4 +70,5 @@ en:
           viat-download-pdf: "Download as PDF"
           viat-document: "Document"
         other:
+          viat-search-results-message_html: "<b>%{count_delimited}</b> %{type} containing <b>«%{query}»</b>"
           viat-view-more: "View more"

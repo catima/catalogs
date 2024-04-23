@@ -1,4 +1,4 @@
-<div id="ouvrage">
+<div class="separator">
   <% if @titre && strip_tags(field_value(@item, @titre)).present? %>
     <h2 id="titreOuvrage"><%= field_value(@item, @titre) %></h2>
   <% end %>
@@ -19,8 +19,8 @@
       <% if @editeur && strip_tags(field_value(@item, @editeur)).present? %>
         <span><%= @editeur.label %>:</span> <%= field_value(@item, @editeur) %><br>
       <% end %>
-      <% if @date_edition && strip_tags(field_value(@item, @date_edition)).present? %>
-        <span><%= @date_edition.label %>:</span> <%= field_value(@item, @date_edition) %><br>
+      <% if @date_edition %>
+        <span><%= t(".viat-edition-date") %>:</span> <%= @date_edition %><br>
       <% end %>
       <% if @lieu_edition && strip_tags(field_value(@item, @lieu_edition)).present? %>
         <span><%= @lieu_edition.label %>:</span> <%= field_value(@item, @lieu_edition) %><br>
@@ -45,15 +45,15 @@
       <span><%= t(".viat-description") %>:</span><br>
       <% if @format && strip_tags(field_value(@item, @format)).present? %>
         <%= field_value(@item, @format) %>
-        <% if @tome_volume && strip_tags(field_value(@item, @tome_volume)).present? %>
+        <% if @tome && strip_tags(field_value(@item, @tome)).present? %>
           -
         <% end %>
       <% end %>
-      <% if @tome_volume && strip_tags(field_value(@item, @tome_volume)).present? %>
-        <%= field_value(@item, @tome_volume) %> Tome(s)/Volume(s)<% if @nbre_illustrations && strip_tags(field_value(@item, @nbre_illustrations)).present? %>, <% end %>
+      <% if @tome && strip_tags(field_value(@item, @tome)).present? %>
+        <%= field_value(@item, @tome) %> Tome(s)/Volume(s)<% if @nombre_illustrations && strip_tags(field_value(@item, @nombre_illustrations)).present? %>, <% end %>
       <% end %>
-      <% if @nbre_illustrations && strip_tags(field_value(@item, @nbre_illustrations)).present? %>
-        <%= field_value(@item, @nbre_illustrations) %> illustration(s)
+      <% if @nombre_illustrations && strip_tags(field_value(@item, @nombre_illustrations)).present? %>
+        <%= field_value(@item, @nombre_illustrations) %> illustration(s)
       <% end %>
       <br>
       <div id="etablissementCorpus">
@@ -70,28 +70,28 @@
       <br>
     </div>
 
-    <% if @comment && strip_tags(field_value(@item, @comment)).present? %>
+    <% if @remarques && strip_tags(field_value(@item, @remarques)).present? %>
       <p class="corpusInfo">
-        <span><%= @comment.label %>:</span><br>
-        <%= field_value(@item, @comment) %>
+        <span><%= @remarques.label %>:</span><br>
+        <%= field_value(@item, @remarques) %>
       </p>
     <% end %>
 
-    <p class="corpusInfo">
+    <p class="corpusInfo" style="display: inline;">
       <% if @collection_ouvrage && strip_tags(field_value(@item, @collection_ouvrage)).present? %>
         <span><%= @collection_ouvrage.label %>:</span> <%= field_value(@item, @collection_ouvrage) %><br>
       <% end %>
       <% if @langue_ouvrage && strip_tags(field_value(@item, @langue_ouvrage)).present? %>
         <span><%= @langue_ouvrage.label %>:</span> <%= field_value(@item, @langue_ouvrage) %><br>
       <% end %>
-      <% if @autre_editions && strip_tags(field_value(@item, @autre_editions)).present? %>
-        <span><%= @autre_editions.label %>:</span> <%= field_value(@item, @autre_editions) %>
+      <% if @autres_editions && strip_tags(field_value(@item, @autres_editions)).present? %>
+        <span><%= @autres_editions.label %>:</span> <%= field_value(@item, @autres_editions) %>
       <% end %>
     </p>
   </div>
 
-  <span class="searchmsg">
-     <%= t(".viat-title-images",
+  <span class="list-title">
+     <%= t(".viat-title-images_html",
            :images_count => @images_count,
            :corpus_title => @item.get_value('titre')) %>
   </span>

@@ -8,18 +8,46 @@
               <%= field_value(@item, @image, :size => @image_size) %>
             <% end %>
 
-            <% if @texte_image && strip_tags(field_value(@item, @texte_image)).present? %>
-              <div id="imgToolbar">
+            <div id="imgToolbar">
+              <div id="imgActions">
+                <% if exists_for_user?(@item) %>
+                  <%= link_to(
+                        image_tag("fav-on.gif", alt: t("items.buttons.favorites_remove"), :class => "fav-card"),
+                        favorite_path(I18n.locale, @item),
+                        :class => "favorites-remove",
+                        :title => t("items.buttons.favorites_remove"),
+                        method: :delete
+                      ) %>
+                <% else %>
+                  <%= link_to(
+                        image_tag("fav-off.gif", alt: t("items.buttons.favorites_add"), :class => "fav-card"),
+                        favorites_path(I18n.locale, id: @item.id),
+                        :class => "favorites-add",
+                        :title => t("items.buttons.favorites_add"),
+                        method: :post
+                      ) %>
+                <% end %>
+                <% if policy(@item).edit? %>
+                  <%= link_to(
+                        image_tag("edit.gif", alt: t("edit"), :class => "fav-card"),
+                        edit_catalog_admin_item_path(@item.catalog, I18n.locale, @item.item_type, @item),
+                        :title => t("edit"),
+                        :target => '_blank'
+                      ) %>
+                <% end %>
+              </div>
+
+              <% if @texte_dans_image && strip_tags(field_value(@item, @texte_dans_image)).present? %>
                 <p class="info">
                   <a id ="texteImageLabel" href="#">
-                    <span><%= @texte_image.label %></span><%= image_tag("arrow-expand.gif", :id => "arrowtexteImage", :class => "info-toggle-img") %>
+                    <span><%= @texte_dans_image.label %></span><%= image_tag("arrow-expand.gif", :id => "arrowtexteImage", :class => "info-toggle-img") %>
                   </a>
                 </p>
                 <div id="texteImage">
-                  <%= field_value(@item, @texte_image) %>
+                  <%= field_value(@item, @texte_dans_image) %>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
 
             <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('etablissement'))).present? %>
               <div class="hidden" id="imageLegendEtablissment"><%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('etablissement')) %></div>
@@ -27,14 +55,14 @@
             <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('droit-utilisation'))).present? %>
               <div class="hidden" id="imageLegendDroits"><%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('droit-utilisation')) %></div>
             <% end %>
-
-            <% if @image_id && strip_tags(field_value(@item, @image_id)).present? %>
-              <div id="info-wrapper">
-                <hr>
-                <p id="info-content"><span><%= t(".viat-permanent-url") %>:</span> https://purl.org/viatimages/<%= params[:locale] %>/image/<%= @image_id.raw_value(@item) %></p>
-              </div>
-            <% end %>
           </div>
+
+          <% if @image_id && strip_tags(field_value(@item, @image_id)).present? %>
+            <div id="info-wrapper">
+              <hr>
+              <p id="info-content"><span><%= t(".viat-permanent-url") %>:</span> https://purl.org/viatimages/<%= params[:locale] %>/image/<%= @image_id.raw_value(@item) %></p>
+            </div>
+          <% end %>
         </div>
       </td>
       <td id="description-column">
@@ -54,8 +82,8 @@
                 <span><%= t(".viat-original-source") %></span>
                 <div id="ouvrageSource">
                   <%= field_value(@item, @corpus) %>
-                  <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-debut'))).present? %>
-                    <%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('date-edition-debut')) %>
+                  <% if @date_edition %>
+                    <%= @date_edition %>
                   <% end %>
                   <% if @corpus && strip_tags(field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('nombre-illustrations'))).present? %>
                     <%= field_value(@item.get_value(@corpus), @item.get_value(@corpus).item_type.find_field('nombre-illustrations')) %> illustrations
@@ -76,7 +104,7 @@
             <% if @description && strip_tags(field_value(@item, @description)).present? %>
               <div class="info">
                 <span><%= @description.label %></span><br>
-                <%= field_value(@item, @description) %>
+                <%= field_value(@item, @description).html_safe %>
               </div>
             <% end %>
 
@@ -93,7 +121,7 @@
                 <tr>
                   <td>
                     <div id="caracteristiquesGenerales" class="info">
-                      <%= strip_tags(field_value(@item, @critere_technique)).titleize if @critere_technique && strip_tags(field_value(@item, @critere_technique)).present? %>
+                      <%= field_value(@item, @critere_technique) if @critere_technique && strip_tags(field_value(@item, @critere_technique)).present? %>
                       <% if @illustration_composee && strip_tags(field_value(@item, @illustration_composee)).present? %>
                         <% if @yes === strip_tags(field_value(@item, @illustration_composee)) %>
                           <%= @illustration_composee.label %>
@@ -155,8 +183,8 @@
               </table>
             </div>
 
-            <% if (@remarque && strip_tags(field_value(@item, @remarque)).present?) ||
-              (@lieu_edition_image && strip_tags(field_value(@item, @lieu_edition_image)).present?) ||
+            <% if (@remarques && strip_tags(field_value(@item, @remarques)).present?) ||
+              (@image_lieu_edition && strip_tags(field_value(@item, @image_lieu_edition)).present?) ||
               (@date_evenement && strip_tags(field_value(@item, @date_evenement)).present?) %>
               <p class="info">
                 <a id ="remarquesLabel" href="#">
@@ -166,16 +194,16 @@
                 </a>
               </p>
               <div id="remarques">
-                <% if @remarque && strip_tags(field_value(@item, @remarque)).present? %>
+                <% if @remarques && strip_tags(field_value(@item, @remarques)).present? %>
                   <p class="info">
                     <span><%= t(".viat-researcher-comments") %></span><br>
-                    <%= field_value(@item, @remarque) %>
+                    <%= field_value(@item, @remarques) %>
                   </p>
                 <% end %>
-                <% if @lieu_edition_image && strip_tags(field_value(@item, @lieu_edition_image)).present? %>
+                <% if @image_lieu_edition && strip_tags(field_value(@item, @image_lieu_edition)).present? %>
                   <p class="info">
-                    <span><%= @lieu_edition_image.label %></span><br>
-                    <%= field_value(@item, @lieu_edition_image) %>
+                    <span><%= @image_lieu_edition.label %></span><br>
+                    <%= field_value(@item, @image_lieu_edition) %>
                   </p>
                 <% end %>
                 <% if @date_evenement && strip_tags(field_value(@item, @date_evenement)).present? %>
@@ -195,8 +223,8 @@
 </table>
 
 <ul class="nav nav-tabs nav-justified" id="image-tabs" role="tablist">
-  <li class="nav-item active">
-    <a class="nav-link" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true"><%= t(".viat-details") %></a>
+  <li class="nav-item">
+    <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="home" aria-selected="true"><%= t(".viat-details") %></a>
   </li>
   <% if @location && field_value(@item, @location).present? %>
     <li class="nav-item">
@@ -204,27 +232,32 @@
     </li>
   <% end %>
 </ul>
-
 <div class="tab-content" id="image-item-tabs-content">
-  <div class="tab-pane show fade active" id="details" role="tabpanel" aria-labelledby="details-tab">
+  <div class="tab-pane show fade active" id="details" role="tabpanel" aria-labelledby="nav-details-tab">
     <table>
       <tbody>
         <tr>
           <td>
             <% if @domaine && strip_tags(field_value(@item, @domaine)).present? %>
-              <p class="info"><span><%= @domaine.label %></span><br>
-                <%= field_value(@item, @domaine) %>
-              </p>
+              <div class="info">
+                <span><%= @domaine.label %></span>
+              </div>
+              <%= field_value(@item, @domaine) %>
             <% end %>
             <% if @keyword && strip_tags(field_value(@item, @keyword)).present? %>
-              <p class="info mots-cles"><span><%= @keyword.label %></span><br>
+              <div class="info">
+                <span><%= @keyword.label %></span>
+              </div>
+              <div class="mots-cles">
                 <%= field_value(@item, @keyword) %>
-              </p>
+              </div>
             <% end %>
           </td>
           <td>
             <% if @geographie && strip_tags(field_value(@item, @geographie)).present? %>
-              <p class="info"><span><%= @geographie.label %></span></p>
+              <p class="info">
+                <span><%= @geographie.label %></span>
+              </p>
               <% @geographie_sorted.each do |geo_group| %>
                 <p class="info">
                   <%= strip_tags(field_value(geo_group.first, geo_group.first.item_type.find_field('geo-feature-class'))) %>:
@@ -237,16 +270,17 @@
           </td>
           <td>
             <% if @texte_legende && strip_tags(field_value(@item, @texte_legende)).present? %>
-              <p class="info"><span><%= t(".viat-legend") %></span><br>
-                <%= field_value(@item, @texte_legende) %>
-              </p>
+              <div class="info">
+                <span><%= t(".viat-legend") %></span>
+              </div>
+              <%= field_value(@item, @texte_legende) %>
             <% end %>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="tab-pane fade" id="carte" role="tabpanel" aria-labelledby="carte-tab">
+  <div class="tab-pane fade" id="carte" role="tabpanel" aria-labelledby="nav-carte-tab">
     <% if @location && field_value(@item, @location).present? %>
       <div id="carte-content">
         <%= field_value(@item, @location) %>
