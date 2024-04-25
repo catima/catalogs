@@ -1,9 +1,8 @@
 <% if current_user.authenticated? %>
-  <%= link_to(
-          t(".viat_my_images"),
-          edit_user_registration_path(:locale => I18n.locale)) %>
-<% else %>
+  <span class="menu-separator">|</span>
   <%= link_to(
         t(".viat_my_album"),
-        new_user_session_path(:locale => I18n.locale)) %>
+        favorites_path(:locale => I18n.locale, 'catalog' => @catalog.id),
+        target: "_blank",
+      ) %>
 <% end %>
