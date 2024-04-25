@@ -197,7 +197,7 @@
                 <% if @remarques && strip_tags(field_value(@item, @remarques)).present? %>
                   <p class="info">
                     <span><%= t(".viat-researcher-comments") %></span><br>
-                    <%= field_value(@item, @remarques) %>
+                    <%= field_value(@item, @remarques).html_safe %>
                   </p>
                 <% end %>
                 <% if @image_lieu_edition && strip_tags(field_value(@item, @image_lieu_edition)).present? %>
