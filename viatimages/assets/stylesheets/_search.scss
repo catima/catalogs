@@ -120,13 +120,15 @@
 }
 #map-wrapper {
   margin-top: -200px;
-  width: 955px;
-  height: 515px;
-  padding: 7px;
+  padding-left: 7px;
+  padding-right: 7px;
   background-color: #171a1899;
   font-family: 'Avenir Light', sans-serif;
-  display: flex;
-  flex-direction: row;
+
+  div.geoViewer {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
 }
 #map {
   height: 100%;

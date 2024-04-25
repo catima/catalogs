@@ -35,15 +35,13 @@ class ViatimagesCatalogsController < CatalogsController
         WITH keyword_ids AS (
           SELECT jsonb_array_elements_text((data ->> '#{keywords_attribute}')::jsonb)::int AS kid
           FROM items
-          WHERE item_type_id = #{keyword_type.id}
-          AND data -> '#{keywords_attribute}' IS NOT NULL
+          WHERE data -> '#{keywords_attribute}' IS NOT NULL
         )
         SELECT kid, COUNT(*) AS n
         FROM keyword_ids
         GROUP BY kid
         LIMIT 20
       ) A ON I.id = A.kid
-      WHERE item_type_id = #{image_type.first.id}
       ORDER BY n DESC")
 
     @keywords = []
