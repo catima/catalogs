@@ -2,41 +2,72 @@
   <div class="geosearch-filters">
     <select class="sel_mapsearch" id="sel_regions" name="sel_regions">
       <option value="" selected="selected"><%= t('.viat-geosearch-regions') %></option>
+      <% @regions.each do |region| %>
+        <option value="<%= region.id %>"><%= default_display_name(region) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_villes" name="sel_villes">
       <option value="" selected="selected"><%= t('.viat-geosearch-cities') %></option>
+      <% @places.each do |place| %>
+        <option value="<%= place.id %>"><%= default_display_name(place) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_vallees" name="sel_vallees">
       <option value="" selected="selected"><%= t('.viat-geosearch-valleys') %></option>
+      <% @valleys.each do |valley| %>
+        <option value="<%= valley.id %>"><%= default_display_name(valley) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_chaines_montagnes" name="sel_chaines_montagnes">
       <option value="" selected="selected"><%= t('.viat-geosearch-mountain-ranges') %></option>
+      <% @mountain_ranges.each do |mountain_range| %>
+        <option value="<%= mountain_range.id %>"><%= default_display_name(mountain_range) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_cols" name="sel_cols">
       <option value="" selected="selected"><%= t('.viat-geosearch-passes') %></option>
+      <% @passes.each do |passe| %>
+        <option value="<%= passe.id %>"><%= default_display_name(passe) %></option>
+      <% end %>
     </select>
+
     <select class="sel_mapsearch" id="sel_montagnes" name="sel_montagnes">
       <option value="" selected="selected"><%= t('.viat-geosearch-mountains') %></option>
+      <% @mountains.each do |mountain| %>
+        <option value="<%= mountain.id %>"><%= default_display_name(mountain) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_lacs" name="sel_lacs">
       <option value="" selected="selected"><%= t('.viat-geosearch-lakes') %></option>
+      <% @lakes.each do |lake| %>
+        <option value="<%= lake.id %>"><%= default_display_name(lake) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_cours_eau" name="sel_cours_eau">
       <option value="" selected="selected"><%= t('.viat-geosearch-rivers') %></option>
+      <% @rivers.each do |river| %>
+        <option value="<%= river.id %>"><%= default_display_name(river) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_cascades" name="sel_cascades">
       <option value="" selected="selected"><%= t('.viat-geosearch-waterfalls') %></option>
+      <% @waterfalls.each do |waterfall| %>
+        <option value="<%= waterfall.id %>"><%= default_display_name(waterfall) %></option>
+      <% end %>
     </select>
 
     <select class="sel_mapsearch" id="sel_glaciers" name="sel_glaciers">
       <option value="" selected="selected"><%= t('.viat-geosearch-glaciers') %></option>
+      <% @glaciers.each do |glacier| %>
+        <option value="<%= glacier.id %>"><%= default_display_name(glacier) %></option>
+      <% end %>
     </select><br>
 
     <select id="sel_ouvrage_map" name="sel_ouvrage">
@@ -48,7 +79,7 @@
 <div id="map-wrapper">
   <% if @container %>
     <%= react_component('GeoViewer/components/GeoViewer', {
-      features: @container.geojson.to_json,
+      features: @geo_images.present? ? @geo_images.to_json : @container.geojson.to_json,
       layers: @container.geo_layers,
       mapHeight: @container.map_height,
       catalog: @catalog.slug,
