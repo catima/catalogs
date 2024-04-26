@@ -110,6 +110,10 @@
   font-size: 16px;
   color: #fff;
   line-height: 36px;
+
+  .geosearch-filters {
+    margin-top: 10px;
+  }
 }
 .sel_mapsearch {
   width: 225px;
@@ -133,6 +137,18 @@
 #map {
   height: 100%;
   flex: auto;
+}
+#map-outer {
+  margin-top: 10px;
+
+  .warning-icon {
+    float: left;
+  }
+
+  p {
+    color: #2e2e2a;
+    margin-left: 22px;
+  }
 }
 #infobox {
   flex: inherit;

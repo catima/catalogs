@@ -33,6 +33,19 @@ fr:
   geosearch:
     header:
       viat-search-btn: Rechercher
+    index:
+      viat-geosearch-regions: '-- Régions --'
+      viat-geosearch-cities: '-- Villes --'
+      viat-geosearch-valleys: '-- Vallées --'
+      viat-geosearch-mountain-ranges: '-- Chaînes montagneuses --'
+      viat-geosearch-passes: '-- Cols --'
+      viat-geosearch-mountains: '-- Montagnes --'
+      viat-geosearch-lakes: '-- Lacs --'
+      viat-geosearch-rivers: "-- Cours d'eau --"
+      viat-geosearch-waterfalls: '-- Cascades --'
+      viat-geosearch-glaciers: '-- Glaciers --'
+      viat-geosearch-book: 'Sélectionner un ouvrage'
+      viat-geosearch-warning_html: "La géolocalisation exacte de toutes les images n'est pas certifiée<br>Les images non géolocalisées n'apparaissent pas dans ce mode de recherche"
   advanced_searches:
       show:
         viat-no-results: "Aucun résultat pour l'instant"

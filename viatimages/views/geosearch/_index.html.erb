@@ -1,48 +1,47 @@
 <div id="mapsearchregions">
-  <div style="margin-top: 10px;">
+  <div class="geosearch-filters">
     <select class="sel_mapsearch" id="sel_regions" name="sel_regions">
-      <option value="" selected="selected">-- Régions --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-regions') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_villes" name="sel_villes">
-      <option value="" selected="selected">-- Villes --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-cities') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_vallees" name="sel_vallees">
-      <option value="" selected="selected">-- Vallées --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-valleys') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_chaines_montagnes" name="sel_chaines_montagnes">
-      <option value="" selected="selected">-- Chaînes montagneuses --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-mountain-ranges') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_cols" name="sel_cols">
-      <option value="" selected="selected">-- Cols --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-passes') %></option>
     </select>
     <select class="sel_mapsearch" id="sel_montagnes" name="sel_montagnes">
-      <option value="" selected="selected">-- Montagnes --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-mountains') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_lacs" name="sel_lacs">
-      <option value="" selected="selected">-- Lacs --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-lakes') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_cours_eau" name="sel_cours_eau">
-      <option value="" selected="selected">-- Cours d'eau --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-rivers') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_cascades" name="sel_cascades">
-      <option value="" selected="selected">-- Cascades --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-waterfalls') %></option>
     </select>
 
     <select class="sel_mapsearch" id="sel_glaciers" name="sel_glaciers">
-      <option value="" selected="selected">-- Glaciers --</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-glaciers') %></option>
     </select><br>
 
     <select id="sel_ouvrage_map" name="sel_ouvrage">
-      <option value="" selected="selected">Sélectionner un ouvrage</option>
+      <option value="" selected="selected"><%= t('.viat-geosearch-book') %></option>
     </select>
-
   </div>
 </div>
 
@@ -58,14 +57,13 @@
   <% end %>
 </div>
 
-<div id="map-outer" style="margin-top: 10px;">
-  <div style="float: left;">
+<div id="map-outer">
+  <div class="warning-icon">
     <%= image_tag("attention-13px.gif", alt: "Attention") %>
   </div>
 
-  <p style="color: #2e2e2a; margin-left: 22px;">
-    La géolocalisation exacte de toutes les images n'est pas certifiée<br>
-    Les images non géolocalisées n'apparaissent pas dans ce mode de recherche
+  <p>
+    <%= t('.viat-geosearch-warning_html') %>
   </p>
   <hr id="map-outer-border">
 </div>
