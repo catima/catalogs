@@ -24,7 +24,7 @@ class ViatimagesPagesController < PagesController
       @waterfalls = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Waterfall")
       @glaciers = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Glacier")
 
-      @geo_images = request[:feature] ? geo_images(request[:feature]) : nil
+      @geographic_images = request[:feature] ? geographic_images(request[:feature]) : nil
     end
 
     super
@@ -44,7 +44,7 @@ class ViatimagesPagesController < PagesController
     ).order(Arel.sql("(data->>'#{geofeature_item_type.find_field('nom').uuid}')::jsonb->'_translations'->>'#{I18n.locale.to_s}'"))
   end
 
-  def geo_images(item_id)
+  def geographic_images(item_id)
     images_item_type = catalog.item_types.find_by(slug: 'images')
     images_geo_field = images_item_type.find_field('geo-location')
     images_geo_features_field = images_item_type.find_field('geo')
