@@ -1,9 +1,11 @@
 class ViatimagesPagesController < PagesController
   def show
-      if request[:slug] == 'geosearch'
+    geosearch_slug = 'geosearch'
+
+    if request[:slug] == geosearch_slug
       # A page with the "geosearch" slug should be available in the catalog. This page
       # should reference the "Image" item Type, and have a map container for each language.
-      page = catalog.pages.find_by(slug: 'geosearch')
+      page = catalog.pages.find_by(slug: geosearch_slug)
 
       return super unless page
 
@@ -25,6 +27,7 @@ class ViatimagesPagesController < PagesController
       @glaciers = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Glacier")
 
       @geographic_images = request[:feature] ? geographic_images(request[:feature]) : nil
+      @base_feature_path = viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)+"?feature="
     end
 
     super
@@ -46,13 +49,17 @@ class ViatimagesPagesController < PagesController
 
   def geographic_images(item_id)
     images_item_type = catalog.item_types.find_by(slug: 'images')
+
+    return [] unless images_item_type && item_id
+
     images_geo_field = images_item_type.find_field('geo-location')
     images_geo_features_field = images_item_type.find_field('geo')
 
-    return [] unless images_item_type && item_id && images_geo_field && images_geo_features_field
+    return [] unless images_geo_field && images_geo_features_field
 
-    geo_images_ids = find_geo_images(images_item_type, images_geo_features_field, item_id)
-                   .pluck(:id)
+    geo_images_ids = find_geo_images(
+      images_item_type, images_geo_features_field, item_id
+    ).pluck(:id)
 
     return [] unless geo_images_ids.present?
 
