@@ -5,7 +5,7 @@ class ViatimagesCatalogsController < CatalogsController
     # Retrieve & sort the all the corpus
     corpus_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'corpus')
     @corpus_type_items = nil if corpus_type.empty?
-    corpus_title_field = corpus_type.first.find_field('title')
+    corpus_title_field = corpus_type.first.find_field('titre')
     @corpus_type_items = Item.where(item_type_id: corpus_type.ids.first).sorted_by_field(corpus_title_field)
 
     # Retrieve & sort the all the domains
@@ -22,8 +22,8 @@ class ViatimagesCatalogsController < CatalogsController
     # Make a single raw SQL query to avoid 20+ queries
     image_type_keyword_field = image_type.present? ? image_type.first.find_field('mot-cle') : nil
     keywords_attribute = image_type_keyword_field.uuid
-    keyword_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'keywords')
-    keyword_name_field = keyword_type.first.find_field('mot').uuid
+    keyword_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'keywords').first
+    keyword_name_field = keyword_type.find_field('mot').uuid
 
     keywords = ActiveRecord::Base.connection.execute("
       SELECT

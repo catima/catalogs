@@ -30,6 +30,22 @@ en:
     show:
       viat-search-results-message_html: "<b>%{count_delimited}</b> images containing <b>«%{query}»</b>"
       viat-no-search-criteria: 'No search criteria has been entered'
+  geosearch:
+    header:
+      viat-search-btn: Search
+    index:
+      viat-geosearch-regions: '-- Regions --'
+      viat-geosearch-cities: '-- Cities --'
+      viat-geosearch-valleys: '-- Valleys --'
+      viat-geosearch-mountain-ranges: '-- Mountain ranges --'
+      viat-geosearch-passes: '-- Passes --'
+      viat-geosearch-mountains: '-- Mountains --'
+      viat-geosearch-lakes: '-- Lakes --'
+      viat-geosearch-rivers: '-- Rivers --'
+      viat-geosearch-waterfalls: '-- Waterfalls --'
+      viat-geosearch-glaciers: '-- Glaciers --'
+      viat-geosearch-book: 'Select a book'
+      viat-geosearch-warning_html: "The exact geolocation of all images can not be certified<br>The images that have not been geolocated do not appear in this search modality"
   advanced_searches:
       show:
         viat-no-results: "No result for the moment"

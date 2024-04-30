@@ -17,7 +17,7 @@ de:
       viat-contacts: 'Kontakt'
       viat-legal: 'Rechtliches'
     user_menu:
-      viat_my_album: 'Mein album'
+      viat_my_album: 'Mein Album'
       viat_my_images: 'Meine Bilder'
     search:
       standard_search:
@@ -30,6 +30,22 @@ de:
     show:
       viat-search-results-message_html: "<b>%{count_delimited}</b> Bilder mit <b>«%{query}»</b>"
       viat-no-search-criteria: "Es wurden keine Suchkriterien eingegeben"
+  geosearch:
+    header:
+      viat-search-btn: Suchen
+    index:
+      viat-geosearch-regions: '-- Regionen --'
+      viat-geosearch-cities: '-- Städte --'
+      viat-geosearch-valleys: '-- Täler --'
+      viat-geosearch-mountain-ranges: '-- Bergketten --'
+      viat-geosearch-passes: '-- Pässe --'
+      viat-geosearch-mountains: '-- Berge --'
+      viat-geosearch-lakes: '-- Seen --'
+      viat-geosearch-rivers: "-- Wasserläufe --"
+      viat-geosearch-waterfalls: '-- Wasserfälle --'
+      viat-geosearch-glaciers: '-- Gletscher --'
+      viat-geosearch-book: 'Werk auswählen'
+      viat-geosearch-warning_html: "Die genaue Lokalisierung von allen Bildern kann nicht garantiert werden<br>Bilder ohne Lokalisierung erscheinen nicht in diesem Suchmodus"
   advanced_searches:
       show:
         viat-no-results: "Zur Zeit kein Resultat"

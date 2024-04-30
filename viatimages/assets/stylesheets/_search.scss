@@ -102,3 +102,65 @@
 #tagcloud .small {
   font-size: 13px;
 }
+
+#mapsearchregions {
+  position: absolute;
+  left: 35px;
+  top: 268px;
+  font-size: 16px;
+  color: #fff;
+  line-height: 36px;
+
+  .geosearch-filters {
+    margin-top: 10px;
+  }
+}
+.sel_mapsearch {
+  width: 225px;
+  margin-right: 15px;
+}
+#sel_ouvrage_map {
+  width: 470px;
+}
+#map-wrapper {
+  margin-top: -200px;
+  padding-left: 7px;
+  padding-right: 7px;
+  background-color: #171a1899;
+  font-family: 'Avenir Light', sans-serif;
+
+  div.geoViewer {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+#map {
+  height: 100%;
+  flex: auto;
+}
+#map-outer {
+  margin-top: 10px;
+
+  .warning-icon {
+    float: left;
+  }
+
+  p {
+    color: #2e2e2a;
+    margin-left: 22px;
+  }
+}
+#infobox {
+  flex: inherit;
+  height: 100%;
+  background-color: #fff;
+  width: 0;
+  transition: width 0.5s;
+  padding: 0;
+  overflow: auto;
+}
+#infobox p {
+  line-height: 1.4;
+  font-size: 11pt;
+  font-weight: 400;
+}
