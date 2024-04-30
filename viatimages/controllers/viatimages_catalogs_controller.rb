@@ -5,7 +5,7 @@ class ViatimagesCatalogsController < CatalogsController
     # Retrieve & sort the all the corpus
     corpus_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'corpus')
     @corpus_type_items = nil if corpus_type.empty?
-    corpus_title_field = corpus_type.first.find_field('title')
+    corpus_title_field = corpus_type.first.find_field('titre')
     @corpus_type_items = Item.where(item_type_id: corpus_type.ids.first).sorted_by_field(corpus_title_field)
 
     # Retrieve & sort the all the domains

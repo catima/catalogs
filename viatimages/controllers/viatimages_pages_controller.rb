@@ -26,8 +26,25 @@ class ViatimagesPagesController < PagesController
       @waterfalls = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Waterfall")
       @glaciers = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Glacier")
 
-      @geographic_images = request[:feature] ? geographic_images(request[:feature]) : nil
-      @base_feature_path = viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)+"?feature="
+      # Retrieve & sort the all the corpus
+      corpus_type = catalog.item_types.find_by(slug: 'corpus')
+      @corpuses = [] unless corpus_type
+      @corpuses = corpus_type.items
+                             .order(Arel.sql("data->>'#{corpus_type.find_field('titre').uuid}'"))
+
+      # Retrieve the geographic images for a specific feature
+      geographic_images = geographic_images(request[:feature]) if request[:feature].present?
+
+      # Retrieve the geographic images for a specific corpus
+      corpus_images = corpus_images(request[:corpus]) if request[:corpus].present?
+
+      # Check if geographic_images or corpus_images are present and return the
+      # value as @geojson. If both are present, always choose corpuses.
+      @geojson = corpus_images || geographic_images
+
+      # Set the base paths for the feature & corpuses links
+      @base_feature_path = "#{viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)}?feature="
+      @base_corpus_path = "#{viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)}?corpus="
     end
 
     super
@@ -57,15 +74,38 @@ class ViatimagesPagesController < PagesController
 
     return [] unless images_geo_field && images_geo_features_field
 
-    geo_images_ids = find_geo_images(
-      images_item_type, images_geo_features_field, item_id
+    geo_images_ids = images_item_type.items.where(
+      "(data->>'#{images_geo_features_field.uuid}')::jsonb @> ?", "[\"#{item_id}\"]"
     ).pluck(:id)
 
     return [] unless geo_images_ids.present?
 
+    geojson(images_item_type, images_geo_field, geo_images_ids)
+  end
+
+  def corpus_images(item_id)
+    images_item_type = catalog.item_types.find_by(slug: 'images')
+
+    return [] unless images_item_type && item_id
+
+    images_geo_field = images_item_type.find_field('geo-location')
+    corpus_field = images_item_type.find_field('corpus')
+
+    return [] unless images_geo_field
+
+    corpus_images_ids = images_item_type.items.where(
+      "(data->>'#{corpus_field.uuid}')::jsonb = ?", item_id
+    ).pluck(:id)
+
+    return [] unless corpus_images_ids.present?
+
+    geojson(images_item_type, images_geo_field, corpus_images_ids)
+  end
+
+  def geojson(images_item_type, images_geo_field, images_ids)
     features = { "type" => "FeatureCollection", "features" => [] }
 
-    sql = build_sql_query(images_item_type, images_geo_field, geo_images_ids)
+    sql = build_sql_query(images_item_type, images_geo_field, images_ids)
 
     res = ActiveRecord::Base.connection.execute(sql)
 
@@ -76,13 +116,7 @@ class ViatimagesPagesController < PagesController
     features
   end
 
-  def find_geo_images(images_item_type, images_geo_features_field, item_id)
-    images_item_type.items.where(
-      "(data->>'#{images_geo_features_field.uuid}')::jsonb @> ?", "[\"#{item_id}\"]"
-    )
-  end
-
-  def build_sql_query(images_item_type, images_geo_field, geo_images_ids)
+  def build_sql_query(images_item_type, images_geo_field, images_ids)
     <<-SQL.squish
       SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson
       FROM (
@@ -91,7 +125,7 @@ class ViatimagesPagesController < PagesController
           SELECT id, data->'#{images_geo_field.uuid}'->'features' AS feats
           FROM items
           WHERE item_type_id = #{images_item_type.id} AND data->'#{images_geo_field.uuid}'->'features' IS NOT NULL
-          AND id IN (#{geo_images_ids.join(',')})
+          AND id IN (#{images_ids.join(',')})
         ) A
       ) B
     SQL

@@ -91,7 +91,12 @@
     </select><br>
 
     <select id="sel_ouvrage_map" name="sel_ouvrage" onchange="location = this.value;">
-      <option value="" selected="selected"><%= t('.viat-geosearch-book') %></option>
+      <option value="<%= @base_corpus_path %>"><%= t('.viat-geosearch-book') %></option>
+      <% @corpuses.each do | corpus | %>
+        <option value="<%= @base_corpus_path + corpus.id.to_s %>" <%= request[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
+          <%= default_display_name(corpus).truncate(80) %>
+        </option>
+      <% end %>
     </select>
   </div>
 </div>
@@ -99,7 +104,7 @@
 <div id="map-wrapper">
   <% if @container %>
     <%= react_component('GeoViewer/components/GeoViewer', {
-      features: @geographic_images.present? ? @geographic_images.to_json : @container.geojson.to_json,
+      features: @geojson.present? ? @geojson.to_json : @container.geojson.to_json,
       layers: @container.geo_layers,
       mapHeight: @container.map_height,
       catalog: @catalog.slug,
