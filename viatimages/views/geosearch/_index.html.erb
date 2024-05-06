@@ -19,7 +19,7 @@
       <option value="<%= @base_corpus_path %>"><%= t('.viat-geosearch-book') %></option>
       <% @corpuses.each do | corpus | %>
         <option value="<%= @base_corpus_path + corpus.id.to_s %>" <%= request[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(corpus).truncate(80) %>
+          <%= corpus.get_value("titre").truncate(70) %>
         </option>
       <% end %>
     </select>

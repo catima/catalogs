@@ -33,7 +33,9 @@
             <option value="" selected="selected"><%= t(".viat-select-domain") %></option>
             <% if @domain_choice_set_items %>
               <% @domain_choice_set_items.each do | domain, link | %>
-                <option value="<%= link %>"><%= domain.short_name.truncate(70) %></option>
+                <option value="<%= link %>">
+                  <%= domain.short_name.truncate(70) %>
+                </option>
               <% end %>
             <% end %>
           </select>
@@ -46,8 +48,8 @@
           <select id="sel_corpus" name="sel_corpus" onchange="location = this.value;">
             <option value="/<%= @catalog.slug %>/<%= params[:locale] %>" selected="selected"><%= t(".viat-select-corpus") %></option>
             <% if @corpus_type_items %>
-              <% @corpus_type_items.each do | corpus | %>
-                <option value="<%= item_path(:catalog_slug => corpus.catalog, :item_type_slug => corpus.item_type, :locale => I18n.locale, :id => corpus) %>">
+              <% @corpus_type_items.each do | corpus, link | %>
+                <option value="<%= link %>">
                   <%= corpus.get_value("titre").truncate(70) %>
                 </option>
               <% end %>

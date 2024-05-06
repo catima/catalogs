@@ -2,20 +2,27 @@ class ViatimagesCatalogsController < CatalogsController
   def show
     image_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'images')
 
-    # Retrieve & sort the all the corpus
+    # Retrieve & sort the all the corpuses
     corpus_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'corpus')
-    @corpus_type_items = nil if corpus_type.empty?
-    corpus_title_field = corpus_type.first.find_field('titre')
-    @corpus_type_items = Item.where(item_type_id: corpus_type.ids.first).sorted_by_field(corpus_title_field)
+    corpus_type_items = corpus_type.empty? ? [] : Item.where(item_type_id: corpus_type.ids.first).sorted_by_field(corpus_type.first.find_field('titre'))
+    @corpus_type_items = {}
+    corpus_type_items.each do |corpus|
+      @corpus_type_items.store(
+        corpus,
+        [I18n.locale, "images?corpus=#{corpus.id}"].join("/")
+      )
+    end
 
     # Retrieve & sort the all the domains
     domain_choice_set = ChoiceSet.where(catalog_id: @catalog.id).where(name: 'Domaines')
-    domain_choice_set_items = domain_choice_set.empty? ? nil : Choice.where(choice_set_id: domain_choice_set.ids.first).sorted
+    domain_choice_set_items = domain_choice_set.empty? ? [] : Choice.where(choice_set_id: domain_choice_set.ids.first).sorted
     @domain_choice_set_items = {}
     domain_choice_set_items.each do |domain|
       value_slug = [I18n.locale, domain.short_name].join("-")
-      link = [I18n.locale, "images?domaine=#{value_slug}"].join("/")
-      @domain_choice_set_items.store(domain, link)
+      @domain_choice_set_items.store(
+        domain,
+        [I18n.locale, "images?domaine=#{value_slug}"].join("/")
+      )
     end
 
     # Retrieve the first 20 most used keywords
