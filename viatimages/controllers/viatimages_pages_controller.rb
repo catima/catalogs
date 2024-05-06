@@ -13,10 +13,11 @@ class ViatimagesPagesController < PagesController
 
       geofeature_classes_item_type = catalog.item_types.find_by(slug: 'geo-feature-classes')
       geofeature_item_type = catalog.item_types.find_by(slug: 'geo-features')
+      @geo_feature_primary_field = geofeature_item_type.field_for_select
 
       # Retrieve the geographic features and create objects with
       # the properties needed for the select elements.
-      @select_elements = [
+      @features_select = [
         {
           name: 'sel_regions',
           items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Region/Canton"),
