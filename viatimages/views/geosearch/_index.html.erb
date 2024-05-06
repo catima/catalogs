@@ -1,94 +1,16 @@
 <div id="mapsearchregions">
   <div class="geosearch-filters">
-    <select class="sel_mapsearch" id="sel_regions" name="sel_regions" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-regions') %></option>
-      <% @regions.each do |region| %>
-        <option value="<%= @base_feature_path + region.id.to_s %>" <%= request[:feature] == region.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(region) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_villes" name="sel_villes" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-cities') %></option>
-      <% @places.each do |place| %>
-        <option value="<%= @base_feature_path + place.id.to_s %>" <%= request[:feature] == place.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(place) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_vallees" name="sel_vallees" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-valleys') %></option>
-      <% @valleys.each do |valley| %>
-        <option value="<%= @base_feature_path + valley.id.to_s %>" <%= request[:feature] == valley.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(valley) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_chaines_montagnes" name="sel_chaines_montagnes" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-mountain-ranges') %></option>
-      <% @mountain_ranges.each do |mountain_range| %>
-        <option value="<%= @base_feature_path + mountain_range.id.to_s %>" <%= request[:feature] == mountain_range.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(mountain_range) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_cols" name="sel_cols" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-passes') %></option>
-      <% @passes.each do |passe| %>
-        <option value="<%= @base_feature_path + passe.id.to_s %>" <%= request[:feature] == passe.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(passe) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_montagnes" name="sel_montagnes" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-mountains') %></option>
-      <% @mountains.each do |mountain| %>
-        <option value="<%= @base_feature_path + mountain.id.to_s %>" <%= request[:feature] == mountain.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(mountain) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_lacs" name="sel_lacs" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-lakes') %></option>
-      <% @lakes.each do |lake| %>
-        <option value="<%= @base_feature_path + lake.id.to_s %>" <%= request[:feature] == lake.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(lake) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_cours_eau" name="sel_cours_eau" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-rivers') %></option>
-      <% @rivers.each do |river| %>
-        <option value="<%= @base_feature_path + river.id.to_s %>" <%= request[:feature] == river.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(river) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_cascades" name="sel_cascades" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-waterfalls') %></option>
-      <% @waterfalls.each do |waterfall| %>
-        <option value="<%= @base_feature_path + waterfall.id.to_s %>" <%= request[:feature] == waterfall.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(waterfall) %>
-        </option>
-      <% end %>
-    </select>
-
-    <select class="sel_mapsearch" id="sel_glaciers" name="sel_glaciers" onchange="location = this.value;">
-      <option value="<%= @base_feature_path %>"><%= t('.viat-geosearch-glaciers') %></option>
-      <% @glaciers.each do |glacier| %>
-        <option value="<%= @base_feature_path + glacier.id.to_s %>" <%= request[:feature] == glacier.id.to_s ? 'selected' : '' %>>
-          <%= default_display_name(glacier) %>
-        </option>
-      <% end %>
-    </select><br>
+    <% @select_elements.each do |element| %>
+      <select class="sel_mapsearch" id="<%= element[:name] %>" name="<%= element[:name] %>" onchange="location = this.value;">
+        <option value="<%= @base_feature_path %>"><%= t(element[:label]) %></option>
+        <% element[:items].each do |item| %>
+          <option value="<%= @base_feature_path + item.id.to_s %>" <%= request[:feature] == item.id.to_s ? 'selected' : '' %>>
+            <%= default_display_name(item) %>
+          </option>
+        <% end %>
+      </select>
+    <% end %>
+    <br>
 
     <select id="sel_ouvrage_map" name="sel_ouvrage" onchange="location = this.value;">
       <option value="<%= @base_corpus_path %>"><%= t('.viat-geosearch-book') %></option>

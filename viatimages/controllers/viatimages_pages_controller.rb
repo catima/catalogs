@@ -14,17 +14,60 @@ class ViatimagesPagesController < PagesController
       geofeature_classes_item_type = catalog.item_types.find_by(slug: 'geo-feature-classes')
       geofeature_item_type = catalog.item_types.find_by(slug: 'geo-features')
 
-      # Find the items for multiple geographic classes
-      @regions = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Region/Canton")
-      @places = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Place name/Locality")
-      @valleys = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Valley")
-      @mountain_ranges = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Mountain range")
-      @passes = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Pass")
-      @mountains = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Mountain")
-      @lakes = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Lake")
-      @rivers = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Watercourse, river")
-      @waterfalls = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Waterfall")
-      @glaciers = find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Glacier")
+      # Retrieve the geographic features and create objects with
+      # the properties needed for the select elements.
+      @select_elements = [
+        {
+          name: 'sel_regions',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Region/Canton"),
+          label: '.viat-geosearch-regions'
+        },
+        {
+          name: 'sel_villes',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Place name/Locality"),
+          label: '.viat-geosearch-cities'
+        },
+        {
+          name: 'sel_vallees',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Valley"),
+          label: '.viat-geosearch-valleys'
+        },
+        {
+          name: 'sel_chaines_montagnes',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Mountain range"),
+          label: '.viat-geosearch-mountain-ranges'
+        },
+        {
+          name: 'sel_cols',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Pass"),
+          label: '.viat-geosearch-passes'
+        },
+        {
+          name: 'sel_montagnes',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Mountain"),
+          label: '.viat-geosearch-mountains'
+        },
+        {
+          name: 'sel_lacs',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Lake"),
+          label: '.viat-geosearch-lakes'
+        },
+        {
+          name: 'sel_cours_eau',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Watercourse, river"),
+          label: '.viat-geosearch-rivers'
+        },
+        {
+          name: 'sel_cascades',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Waterfall"),
+          label: '.viat-geosearch-waterfalls'
+        },
+        {
+          name: 'sel_glaciers',
+          items: find_geographic_items(geofeature_classes_item_type, geofeature_item_type, "Glacier"),
+          label: '.viat-geosearch-glaciers'
+        }
+      ]
 
       # Retrieve & sort the all the corpus
       corpus_type = catalog.item_types.find_by(slug: 'corpus')
