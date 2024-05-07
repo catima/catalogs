@@ -4,24 +4,36 @@ class ViatimagesCatalogsController < CatalogsController
 
     # Retrieve & sort the all the corpuses
     corpus_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'corpus')
+    corpus_field = image_type.first.find_field('corpus')
     corpus_type_items = corpus_type.empty? ? [] : Item.where(item_type_id: corpus_type.ids.first).sorted_by_field(corpus_type.first.find_field('titre'))
     @corpus_type_items = {}
     corpus_type_items.each do |corpus|
       @corpus_type_items.store(
         corpus,
-        [I18n.locale, "images?corpus=#{corpus.id}"].join("/")
+        {
+          :link => [I18n.locale, "images?corpus=#{corpus.id}"].join("/"),
+          :count => image_type.first.items.where(
+            "data->>'#{corpus_field.uuid}' = ?", corpus.id.to_s
+          ).count
+        }
       )
     end
 
     # Retrieve & sort the all the domains
     domain_choice_set = ChoiceSet.where(catalog_id: @catalog.id).where(name: 'Domaines')
+    domain_field = image_type.first.find_field('domaine')
     domain_choice_set_items = domain_choice_set.empty? ? [] : Choice.where(choice_set_id: domain_choice_set.ids.first).sorted
     @domain_choice_set_items = {}
     domain_choice_set_items.each do |domain|
       value_slug = [I18n.locale, domain.short_name].join("-")
       @domain_choice_set_items.store(
         domain,
-        [I18n.locale, "images?domaine=#{value_slug}"].join("/")
+        {
+          :link => [I18n.locale, "images?domaine=#{value_slug}"].join("/"),
+          :count => image_type.first.items.where(
+            "(data->>'#{domain_field.uuid}')::jsonb @> ?", "[\"#{domain.id.to_s}\"]"
+          ).count
+        }
       )
     end
 

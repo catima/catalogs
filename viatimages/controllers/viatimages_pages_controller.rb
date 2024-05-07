@@ -86,7 +86,7 @@ class ViatimagesPagesController < PagesController
       # value as @geojson. If both are present, always choose corpuses.
       @geojson = corpus_images || geographic_images
 
-      # Set the base paths for the feature & corpuses links
+      # Set the base paths for the feature & corpus links
       @base_feature_path = "#{viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)}?feature="
       @base_corpus_path = "#{viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)}?corpus="
     end
