@@ -1,8 +1,10 @@
+$background-color: #eae9e8;
+
 body {
   color: #858585;
   font-family: Arial, "Liberation Sans", sans-serif;
   font-size: 14px;
-  background-color: #eae9e8;
+  background-color: $background-color;
   overflow-x: auto;
 }
 
@@ -201,7 +203,7 @@ nav .menu {
 
 #imglist {
   margin-top: 10px;
-  background-color: #eae9e8;
+  background-color: $background-color;
   width: calc(100% - 8px);
   height: calc(100% - 27px);
   overflow-y: scroll;
@@ -252,6 +254,10 @@ nav .menu {
 .imgitem a.details {
   color: #cc4a64;
   font-size: 9pt;
+}
+
+.item-table {
+  --bs-table-bg: $background-color;
 }
 
 circle.marker {
