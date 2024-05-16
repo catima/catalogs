@@ -262,7 +262,7 @@
                 <p class="info">
                   <%= strip_tags(field_value(geo_group.first, geo_group.first.item_type.find_field('geo-feature-class'))) %>:
                   <% geo_group.each do |geo_item| %>
-                    <%= field_value(geo_item, geo_item.item_type.find_field('nom')) %><%= ', ' unless geo_item.equal? geo_group.last %>
+                    <a href="<%= @base_feature_path + geo_item.id.to_s %>"><%= field_value(geo_item, geo_item.item_type.find_field('nom')) %></a><%= ', ' unless geo_item.equal? geo_group.last %>
                   <% end %>
                 </p>
               <% end %>

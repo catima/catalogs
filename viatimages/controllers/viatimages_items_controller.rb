@@ -122,6 +122,9 @@ class ViatimagesItemsController < ItemsController
                           date_debut || date_fin
                         end
       end
+
+      # Set the base path for the geo entities links
+      @base_feature_path = "#{viatimages_pages_path(locale: I18n.locale, slug: 'geosearch')}?feature="
     end
 
   end
