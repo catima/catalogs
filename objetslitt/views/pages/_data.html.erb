@@ -7,11 +7,11 @@
 </p>
 
 <%# Hardcoded special menu only for the "La base de données" page %>
-<div class="navbar navbar-expand">
+<div class="navbar navbar-light navbar-expand navbar-db">
   <div class="navbar-collapse collapse show">
     <ul class="nav navbar-nav mr-auto">
       <li class="nav-item dropdown">
-        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <a href="" class="dropdown-toggle nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
           Textes
         </a>
         <div class="dropdown-menu">
@@ -26,7 +26,7 @@
       </li>
 
       <li class="nav-item dropdown">
-        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <a href="" class="dropdown-toggle nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
           Objets
         </a>
         <div class="dropdown-menu">
@@ -41,7 +41,7 @@
       </li>
 
       <li class="nav-item dropdown">
-        <a href="" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <a href="" class="dropdown-toggle nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
           Auteurs
         </a>
         <div class="dropdown-menu">
@@ -66,6 +66,7 @@
       :label => "Recherche",
       :hide_label => true,
       :autofocus => false,
+      :style => "width: 36em",
       :class => "search-bar",
       :placeholder => "Recherche"
     ) %>

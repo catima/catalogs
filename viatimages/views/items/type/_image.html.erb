@@ -299,3 +299,16 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  // Enable the bootstrap tabs
+  let triggerTabList = [].slice.call(document.querySelectorAll('#image-tabs a'))
+  triggerTabList.forEach(function (triggerEl) {
+    let tabTrigger = new bootstrap.Tab(triggerEl)
+
+    triggerEl.addEventListener('click', function (event) {
+      event.preventDefault()
+      tabTrigger.show()
+    })
+  })
+</script>

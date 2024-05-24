@@ -10,7 +10,7 @@
         ) do %>
           <%= type.name_plural %>
           <% unless @catalog.requires_review %>
-            <span class="badge badge-pill badge-secondary ml-2">
+            <span class="badge rounded-pill bg-secondary ms-2">
               <%= number_with_delimiter(count) %>
             </span>
           <% end %>
