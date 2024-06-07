@@ -49,7 +49,7 @@ en:
   advanced_searches:
       show:
         viat-no-results: "No result for the moment"
-        viat-search-results-message_html: "<b>%{count_delimited}</b> images"
+        viat-search-results-message_html: "<b>%{count_delimited}</b> result(s)"
   items:
       index:
         images-for-book: "images for the book"

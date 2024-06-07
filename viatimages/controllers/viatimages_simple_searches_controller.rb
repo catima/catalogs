@@ -1,4 +1,6 @@
 class ViatimagesSimpleSearchesController < SimpleSearchesController
+  include AdvancedSearchConfig
+
   def show
     super
 
@@ -10,5 +12,9 @@ class ViatimagesSimpleSearchesController < SimpleSearchesController
       :item_type_slug => 'images',
       :search_uuid => @saved_search.uuid
     )
+
+    # Retrieve the default advanced search configuration
+    # to show the advanced search link in the view
+    search_conf_param
   end
 end

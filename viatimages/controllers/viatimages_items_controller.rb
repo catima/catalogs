@@ -1,5 +1,6 @@
 class ViatimagesItemsController < ItemsController
   include FieldsHelper
+  include AdvancedSearchConfig
 
   def index
     super
@@ -54,6 +55,10 @@ class ViatimagesItemsController < ItemsController
       @etablissement = @corpus.get_value('etablissement')
       fields_and_item_references(@corpus) do |_, browse| @images_count = browse.total_count end
     end
+
+    # Retrieve the default advanced search configuration
+    # to show the advanced search link in the view
+    search_conf_param
   end
 
   def show
@@ -127,5 +132,8 @@ class ViatimagesItemsController < ItemsController
       @base_feature_path = "#{viatimages_pages_path(locale: I18n.locale, slug: 'geosearch')}?feature="
     end
 
+    # Retrieve the default advanced search configuration
+    # to show the advanced search link in the view
+    search_conf_param
   end
 end

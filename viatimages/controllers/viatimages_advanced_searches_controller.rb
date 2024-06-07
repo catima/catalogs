@@ -1,7 +1,12 @@
 class ViatimagesAdvancedSearchesController < AdvancedSearchesController
   def new
     super
-    @available_slugs = %w{corpus images etablissements geo-feature keywords}
+
+    # Sort the advance search configurations by slug to always have the
+    # "image" configuration as the first one.
+    @advance_search_confs = @advance_search_confs.to_a.sort_by { |conf|
+      conf.slug
+    }.reverse
   end
   def show
     super

@@ -1,4 +1,6 @@
 class ViatimagesPagesController < PagesController
+  include AdvancedSearchConfig
+
   def show
     geosearch_slug = 'geosearch'
 
@@ -90,6 +92,10 @@ class ViatimagesPagesController < PagesController
       @base_feature_path = "#{viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)}?feature="
       @base_corpus_path = "#{viatimages_pages_path(locale: I18n.locale, slug: geosearch_slug)}?corpus="
     end
+
+    # Retrieve the default advanced search configuration
+    # to show the advanced search link in the view
+    search_conf_param
 
     super
   end

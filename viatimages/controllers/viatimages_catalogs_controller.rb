@@ -1,4 +1,6 @@
 class ViatimagesCatalogsController < CatalogsController
+  include AdvancedSearchConfig
+
   def show
     image_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'images')
 
@@ -70,5 +72,9 @@ class ViatimagesCatalogsController < CatalogsController
     end
     @keywords.sort_by! { |v| v['name'] }
     @keywords_base_url = [I18n.locale, "keywords"].join("/")
+
+    # Retrieve the default advanced search configuration
+    # to show the advanced search link in the view
+    search_conf_param
   end
 end
