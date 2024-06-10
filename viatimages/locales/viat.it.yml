@@ -17,7 +17,7 @@ it:
       viat-contacts: 'Contatti'
       viat-legal: 'Menzioni legali'
     user_menu:
-      viat_my_album: 'Il mio album'
+      viat_my_account: 'Il mio conto'
       viat_my_images: 'Le mie immagini'
     search:
       standard_search:

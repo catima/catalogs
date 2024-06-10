@@ -72,3 +72,13 @@
 #lang_selection span {
   margin-left: 3px;
 }
+
+#lang_selection {
+  #user-menu {
+    display: inline-block;
+
+    li a:focus {
+      background: none;
+    }
+  }
+}

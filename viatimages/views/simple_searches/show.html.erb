@@ -23,6 +23,22 @@
             :count => @simple_search_results&.total_count.presence || 0,
             :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
         <% end %>
+
+        <div style="float: right;">
+          <% if search_exists_for_user?(@saved_search) %>
+            <%= link_to(
+                  fa_icon("bookmark", :text => t(".searches_remove")),
+                  search_path(I18n.locale, @saved_search.search),
+                  method: :delete
+                ) %>
+          <% else %>
+            <%= link_to(
+                  fa_icon("bookmark-o", :text => t(".searches_add")),
+                  searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
+                  method: :post
+                ) %>
+          <% end %>
+        </div>
       </div>
 
       <div class="images-wrapper">
