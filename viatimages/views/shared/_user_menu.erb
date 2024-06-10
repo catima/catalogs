@@ -4,7 +4,7 @@
   <li class="dropdown nav-item">
     <a href="#" class="dropdown-toggle  nav-link" data-bs-toggle="dropdown">
       <%= fa_icon(:user) %>
-      <%= current_user.email %>
+      <%= current_user.email.truncate(30) %>
     </a>
 
     <ul class="dropdown-menu dropdown-menu-end">
