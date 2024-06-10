@@ -25,13 +25,6 @@
       <% if @lieu_edition && strip_tags(field_value(@item, @lieu_edition)).present? %>
         <span><%= @lieu_edition.label %>:</span> <%= field_value(@item, @lieu_edition) %><br>
       <% end %>
-      <% if @siecle_edition && strip_tags(field_value(@item, @siecle_edition)).present? %>
-        <span><%= @siecle_edition.label %>:</span> <%= field_value(@item, @siecle_edition) %><br>
-      <% end %>
-      <% if @siecle_voyage && strip_tags(field_value(@item, @siecle_voyage)).present? %>
-        <span><%= @siecle_voyage.label %>:</span> <%= field_value(@item, @siecle_voyage) %>
-      <% end %>
-
       <% if @provenance_collection && strip_tags(field_value(@item, @provenance_collection)).present? %>
         <span><%= @provenance_collection.label %>:</span> <%= field_value(@item, @provenance_collection) %><br>
       <% end %>
