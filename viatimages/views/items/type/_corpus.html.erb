@@ -3,6 +3,7 @@
     <h2 id="titreOuvrage"><%= field_value(@item, @titre) %></h2>
   <% end %>
 
+  <!-- TODO: missing data (titre traduit) -->
   <% if @titre_trad && strip_tags(field_value(@item, @titre_trad)).present? %>
     <h2 id="titreOuvrageTrad"><%= field_value(@item, @titre_trad) %></h2>
   <% end %>
@@ -12,6 +13,7 @@
   <% end %>
 
   <div id="corpus-persos">
+    <!-- TODO: missing data (personne associée) -->
   </div>
 
   <div id="corpus-details">
@@ -32,6 +34,8 @@
         <span><%= @description_collection.label %>:</span> <%= field_value(@item, @description_collection) %>
       <% end %>
     </p>
+
+    <!-- TODO: missing data (textes online) -->
 
     <div class="corpusInfo">
       <br>
