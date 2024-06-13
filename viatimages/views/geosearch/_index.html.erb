@@ -17,6 +17,7 @@
 
     <select id="sel_ouvrage_map" name="sel_ouvrage" onchange="location = this.value;">
       <option value="<%= @base_corpus_path %>"><%= t('.viat-geosearch-book') %></option>
+      <%# TODO: missing data (prepend "personne associée" to corpus title) %>
       <% @corpuses.each do | corpus | %>
         <option value="<%= @base_corpus_path + corpus.id.to_s %>" <%= request[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
           <%= corpus.get_value("titre").truncate(70) %>

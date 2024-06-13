@@ -71,13 +71,13 @@
             <% if @titre_original && strip_tags(field_value(@item, @titre_original)).present? %>
               <span id="titreDetail">«<%= field_value(@item, @titre_original) %>»</span>
             <% end %>
-            <!-- TODO: missing data (titre traduit) -->
+            <%# TODO: missing data (titre traduit) %>
             <% if @titre && strip_tags(field_value(@item, @titre)).present? %>
               <span id="titreDetailTrad">«<%= field_value(@item, @titre) %>»</span>
             <% end %>
           </div>
 
-          <!-- TODO: missing data (illustrateurs) -->
+          <%# TODO: missing data (illustrateurs) %>
 
           <div id="details-top">
             <% if @corpus && strip_tags(field_value(@item, @corpus)).present? %>
@@ -291,7 +291,7 @@
     <% end %>
   </div>
 
-  <!-- TODO: missing data (textes associé) -->
+  <%# TODO: missing data (textes associé) %>
 
   <% if @chercheur && strip_tags(field_value(@item, @chercheur)).present? %>
     <div id="chercheurWrapper">
