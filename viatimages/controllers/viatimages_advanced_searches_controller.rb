@@ -1,4 +1,6 @@
 class ViatimagesAdvancedSearchesController < AdvancedSearchesController
+  include AdvancedSearchConfig
+
   def new
     super
 
@@ -8,7 +10,12 @@ class ViatimagesAdvancedSearchesController < AdvancedSearchesController
       conf.slug
     }.reverse
   end
+
   def show
     super
+
+    # Retrieve the default advanced search configuration
+    # to show the advanced search link in the view
+    search_conf_param
   end
 end
