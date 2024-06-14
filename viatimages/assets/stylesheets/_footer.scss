@@ -26,8 +26,28 @@
 }
 
 #footer {
-  margin-top: 12px;
-  text-align: center;
+  .navbar {
+    --bs-navbar-padding-y: 0.2rem;
+  }
+
+  @media (max-width: 992px) {
+    .navbar-expand-md {
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+    }
+
+    .navbar-expand-md .navbar-nav {
+      flex-direction: row;
+    }
+
+    .navbar-expand-md .navbar-collapse {
+      display: flex!important;
+    }
+
+    .navbar-expand-md .navbar-toggler {
+      display: none;
+    }
+  }
 }
 
 #footer a {
