@@ -20,7 +20,7 @@
                 :count_delimited => number_with_delimiter(@advanced_search_results.total_count)) %>
         <% end %>
 
-        <div style="float: right;">
+        <div class="bookmark-links">
           <% if search_exists_for_user?(@saved_search) %>
             <%= link_to(
                   fa_icon("bookmark", :text => t(".searches_remove")),
