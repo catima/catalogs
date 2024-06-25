@@ -30,11 +30,13 @@
   li {
     border: 1px solid #dee2e6;
     flex-grow: 0;
+    flex-basis: fit-content;
     cursor: pointer;
     margin-right: 7px;
 
     a {
-      width: 190px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
   }
 }
