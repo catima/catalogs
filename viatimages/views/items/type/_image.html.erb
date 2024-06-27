@@ -324,7 +324,7 @@
                 <%= t(".viat-download-pdf") %>
               </a>
               <a href="/<%= @texte_associe.value_for_item(@item).first.item_type.find_field('pdf').raw_value(@texte_associe.value_for_item(@item).first).fetch("path") %>" download>
-                <%= image_tag("pdf-icon") %>
+                <%= image_tag("pdf-icon.png") %>
               </a>
             </span>
           <% end %>
