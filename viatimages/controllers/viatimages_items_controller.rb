@@ -17,7 +17,7 @@ class ViatimagesItemsController < ItemsController
 
       @corpus.applicable_fields.each do |field|
         @titre = field if field.slug == "titre"
-        #@titre_trad = field if field.slug == "titre-traduit"
+        @titre_trad = field if field.slug == "titre-traduit"
         @titre_long = field if field.slug == "titre-long"
         @lieu_edition = field if field.slug == "lieu-edition"
         @editeur = field if field.slug == "editeur"
@@ -77,7 +77,7 @@ class ViatimagesItemsController < ItemsController
         @image = field if field.slug == "image"
         @texte_dans_image = field if field.slug == "texte-dans-image"
         @titre_original = field if field.slug == "titre-original"
-        #@titre = field if field.slug == "title"
+        @titre_trad = field if field.slug == "titre-traduit"
         #@illustrateurs = field if field.slug == "personne-associee"
         @corpus = field if field.slug == "corpus"
         @description = field if field.slug == "description"
