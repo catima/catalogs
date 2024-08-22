@@ -33,7 +33,7 @@ class ViatimagesCatalogsController < CatalogsController
         {
           :link => [I18n.locale, "images?domaine=#{value_slug}"].join("/"),
           :count => image_type.first.items.where(
-            "(data->>'#{domain_field.uuid}')::jsonb @> ?", "[\"#{domain.id.to_s}\"]"
+            "(data->>'#{domain_field.uuid}')::jsonb @> ?", "[\"#{domain.id}\"]"
           ).count
         }
       )
@@ -66,7 +66,7 @@ class ViatimagesCatalogsController < CatalogsController
       ORDER BY n DESC")
 
     @keywords = []
-    keyword_size_classes = ['largest', 'large', 'medium', 'small']
+    keyword_size_classes = %w[largest large medium small]
     keywords.each_with_index do |kw, idx|
       @keywords.push("id" => kw['id'], "name" => kw['keyword'], "size" => keyword_size_classes[idx / 5])
     end

@@ -7,7 +7,7 @@ class ObjetslittSimpleSearchesController < SimpleSearchesController
     # in the results.
 
     # Reorder the result tabs based on this custom ordered list
-    @preferred_type_slugs = ["textes", "objets", "extraits", "textcrit", "auteur"]
+    @preferred_type_slugs = %w[textes objets extraits textcrit auteur]
     set_active_tab
     reorder_tabs
   end
@@ -21,9 +21,9 @@ class ObjetslittSimpleSearchesController < SimpleSearchesController
     # Prevent making the "textes" tab active if it contains no results !
     # Otherwise it would hide occurrences when the search results contain no
     # "textes" but do contain items from other categories.
-    preferred_type_count = @simple_search_results.item_counts_by_type.find {
-      |type, _| type.slug == preferred_default_slug
-    }&.last || 0
+    preferred_type_count = @simple_search_results.item_counts_by_type.find do |type, _|
+      type.slug == preferred_default_slug
+    end&.last || 0
 
     # Override the active? method of the search results
     @simple_search_results.define_singleton_method(:active?) do |item_type|
@@ -61,6 +61,7 @@ class ObjetslittSimpleSearchesController < SimpleSearchesController
     # list.
     found_types.each do |slug, (type, count)|
       next if @preferred_type_slugs.include?(slug)
+
       @preferred_types << [type, count]
     end
   end

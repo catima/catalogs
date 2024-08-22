@@ -38,9 +38,9 @@ class RhoneCatalogsController < CatalogsController
 
     # Get the list of keywords
     keyword_choice_set = ChoiceSet.find(keyword_field.choice_set_id)
-    @keywords = keyword_choice_set.flat_ordered_choices.map { |d|
+    @keywords = keyword_choice_set.flat_ordered_choices.map do |d|
       [d.id, d.short_name_translations['short_name_fr'], d.parent_id]
-    }
+    end
     @keywords_json = @keywords.to_json
   end
 end

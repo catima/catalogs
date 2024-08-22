@@ -111,7 +111,7 @@ class ViatimagesPagesController < PagesController
 
     geofeature_item_type.items.where(
       "data->>'#{geofeature_item_type.find_field('geo-feature-class').uuid}' = ?", geofeature_class_item.id.to_s
-    ).order(Arel.sql("(data->>'#{geofeature_item_type.find_field('nom').uuid}')::jsonb->'_translations'->>'#{I18n.locale.to_s}'"))
+    ).order(Arel.sql("(data->>'#{geofeature_item_type.find_field('nom').uuid}')::jsonb->'_translations'->>'#{I18n.locale}'"))
   end
 
   def geographic_images(item_id)
