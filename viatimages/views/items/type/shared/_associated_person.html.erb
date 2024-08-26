@@ -32,6 +32,10 @@
           <br>
           <br>
         <% end %>
+        <% if strip_tags(field_value(person, person.item_type.find_field('remarque'))).present? %>
+          <%= field_value(person, person.item_type.find_field('remarque')) %>
+          <br>
+        <% end %>
         <% if strip_tags(field_value(person, person.item_type.find_field('biographie'))).present? %>
           <div style="font-size: 15px; font-weight: bold;"><%= t(".viat-person-biography") %></div>
           <%= field_value(person, person.item_type.find_field('biographie')) %>
