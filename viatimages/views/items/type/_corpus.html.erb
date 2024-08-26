@@ -12,7 +12,10 @@
   <% end %>
 
   <div id="corpus-persos">
-    <%# TODO: missing data (personne associée) %>
+    <% @personne_associee.value_for_item(@item).each_with_index do |person, index| %>
+      <%= render "items/type/shared/associated_person", person: person, index: index %>
+      <br>
+    <% end %>
   </div>
 
   <div id="corpus-details">
@@ -34,7 +37,17 @@
       <% end %>
     </p>
 
-    <%# TODO: missing data (textes online) %>
+    <% if @texte_online && strip_tags(field_value(@item, @texte_online)).present? %>
+      <div class="corpusInfo">
+        <span><%= t(".viat-online-book-collection") %>:</span>
+        <div id="enLigne">
+          <% @texte_online.value_for_item(@item).each do |texte| %>
+            <a href="<%= texte.get_value('url') %>" target="_blank"><%= field_value(texte, texte.item_type.find_field('titre')) ? field_value(texte, texte.item_type.find_field('titre')) : t(".viat-consult") %></a>
+          <% end %>
+        </div>
+        <br>
+      </div>
+    <% end %>
 
     <div class="corpusInfo">
       <br>

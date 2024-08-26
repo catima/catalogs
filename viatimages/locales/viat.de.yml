@@ -85,3 +85,8 @@ de:
         other:
           viat-search-results-message_html: "<b>%{count_delimited}</b> %{type} mit <b>«%{query}»</b>"
           viat-view-more: "Mehr sehen"
+        shared:
+          associated_person:
+            viat-person-reference: "Referenz"
+            viat-person-biography: "Biografie"
+            viat-no-biography: "Die Biographie ist im Moment noch nicht verfügbar."

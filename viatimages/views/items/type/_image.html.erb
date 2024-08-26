@@ -81,9 +81,17 @@
             <% end %>
           </div>
 
-          <%# TODO: missing data (illustrateurs) %>
-
           <div id="details-top">
+            <% if @illustrateurs && strip_tags(field_value(@item, @illustrateurs)).present? %>
+              <div class="info">
+                <span><%= t(".viat-illustrators") %></span><br>
+                <% @illustrateurs.value_for_item(@item).each_with_index do |illustrateur, index| %>
+                  <%= render "items/type/shared/associated_person", person: illustrateur, index: index %>
+                  <br>
+                <% end %>
+              </div>
+            <% end %>
+
             <% if @corpus && strip_tags(field_value(@item, @corpus)).present? %>
               <div class="info">
                 <span><%= t(".viat-original-source") %></span>
