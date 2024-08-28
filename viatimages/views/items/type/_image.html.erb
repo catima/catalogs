@@ -349,7 +349,11 @@
       <div id="chercheur">
         <%= t(".viat-index-desc") %>: <%= field_value(@item, @chercheur) %>
         <% if strip_tags(field_value(@item.get_value(@chercheur), @item.get_value(@chercheur).item_type.find_field('etablissement'))).present? %>
-          <%= field_value(@item.get_value(@chercheur), @item.get_value(@chercheur).item_type.find_field('etablissement')) %>
+          <% if @item.get_value(@chercheur).item_type.find_field('etablissement').value_for_item(@item.get_value(@chercheur)).get_value('url').present? %>
+            <a href="<%= @item.get_value(@chercheur).item_type.find_field('etablissement').value_for_item(@item.get_value(@chercheur)).get_value('url') %>" target="_blank"><%= @item.get_value(@chercheur).item_type.find_field('etablissement').value_for_item(@item.get_value(@chercheur)).item_type.find_field('nom').raw_value(@item.get_value(@chercheur).item_type.find_field('etablissement').value_for_item(@item.get_value(@chercheur))) %></a>
+          <% else %>
+            <%= @item.get_value(@chercheur).item_type.find_field('etablissement').value_for_item(@item.get_value(@chercheur)).item_type.find_field('nom').raw_value(@item.get_value(@chercheur).item_type.find_field('etablissement').value_for_item(@item.get_value(@chercheur))) %>
+          <% end %>
         <% end %>
       </div>
     </div>
