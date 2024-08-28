@@ -6,14 +6,22 @@ class ViatimagesCatalogsController < CatalogsController
 
     # Retrieve & sort the all the corpuses
     corpus_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'corpus')
+    associated_person_field = corpus_type.first.find_field('personne-associee')
+    associated_person_corpus_type = ItemType.where(catalog_id: @catalog.id).where(slug: 'personnes-associees-corpus')
+    associated_person_corpus_principal_field = associated_person_corpus_type.first.find_field('principal')
     corpus_field = image_type.first.find_field('corpus')
     corpus_type_items = corpus_type.empty? ? [] : Item.where(item_type_id: corpus_type.ids.first).sorted_by_field(corpus_type.first.find_field('titre'))
     @corpus_type_items = {}
     corpus_type_items.each do |corpus|
+      associated_persons = associated_person_field.value_for_item(corpus)
+      # Find the principal associated person of the corpus
+      principal_associated_person = associated_persons.find { |person| person && person.data[associated_person_corpus_principal_field.uuid] == "1" }
+
       @corpus_type_items.store(
         corpus,
         {
           :link => [I18n.locale, "images?corpus=#{corpus.id}"].join("/"),
+          :principal_person => principal_associated_person ? associated_person_corpus_type.first.find_field('nom').value_for_item(principal_associated_person) : "",
           :count => image_type.first.items.where(
             "data->>'#{corpus_field.uuid}' = ?", corpus.id.to_s
           ).count
