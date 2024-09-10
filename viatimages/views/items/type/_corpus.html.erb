@@ -86,9 +86,9 @@
       </p>
     <% end %>
 
-    <p class="corpusInfo" style="display: inline;">
+    <div class="corpusInfo" style="display: inline;">
       <% if @collection_ouvrage && strip_tags(field_value(@item, @collection_ouvrage)).present? %>
-        <span><%= @collection_ouvrage.label %>:</span> <%= field_value(@item, @collection_ouvrage) %><br>
+        <span><%= @collection_ouvrage.label %>:</span> <%= field_value(@item, @collection_ouvrage) %><br><br>
       <% end %>
       <% if @langue_ouvrage && strip_tags(field_value(@item, @langue_ouvrage)).present? %>
         <span><%= @langue_ouvrage.label %>:</span> <%= field_value(@item, @langue_ouvrage) %><br>
@@ -96,7 +96,7 @@
       <% if @autres_editions && strip_tags(field_value(@item, @autres_editions)).present? %>
         <span><%= @autres_editions.label %>:</span> <%= field_value(@item, @autres_editions) %>
       <% end %>
-    </p>
+    </div>
   </div>
 
   <span class="list-title">
