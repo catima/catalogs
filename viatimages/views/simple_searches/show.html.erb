@@ -1,10 +1,3 @@
-<% provide(:title) do %>
-  <%= t(".viat-search-results-message_html",
-        :query => @simple_search_results&.query,
-        :count => @simple_search_results&.total_count.presence || 0,
-        :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
-<% end %>
-
 <% provide(:top_content) do %>
   <div class="top-content-type-generic">
     <%= render("shared/searchlinks") %>
@@ -17,11 +10,6 @@
       <div class="list-title">
         <% if @simple_search_results.query.empty? %>
           <%= t(".viat-no-search-criteria") %>
-        <% else %>
-          <%= t(".viat-search-results-message_html",
-            :query => @simple_search_results&.query,
-            :count => @simple_search_results&.total_count.presence || 0,
-            :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
         <% end %>
 
         <div class="bookmark-links">
@@ -41,7 +29,27 @@
         </div>
       </div>
 
-      <div class="images-wrapper">
+      <div class="images-wrapper" style="border-top: none;">
+        <% if @simple_search_results.item_counts_by_type.many? %>
+          <ul class="nav nav-tabs mb-3">
+            <% @simple_search_results.item_counts_by_type.sort_by { |type, _| type.slug == "images" ? 0 : 1 }.each do |type, count| %>
+              <% if type && (type.slug == "images" || type.slug == "corpus") %>
+                <%= tag.li(
+                  :role => "presentation",
+                  :class => "nav-item") do %>
+                  <%= link_to({type: type.slug, q: @simple_search_results.query}, class: ["nav-link", ("active" if @simple_search_results.active?(type))]) do %>
+                    <%= type.name_plural %>
+                    <% unless @catalog.requires_review %>
+                      <span class="badge rounded-pill text-bg-secondary ms-2">
+                        <%= number_with_delimiter(count) %>
+                      </span>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </ul>
+        <% end %>
         <div class="images">
           <%= render_item_list(@simple_search_results) %>
           <%= paginate(@simple_search_results.items) %>
