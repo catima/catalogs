@@ -4,7 +4,7 @@ class ViatimagesPagesController < PagesController
   def show
     geosearch_slug = 'geosearch'
 
-    if request[:slug] == geosearch_slug
+    if params[:slug] == geosearch_slug
       # A page with the "geosearch" slug should be available in the catalog. This page
       # should reference the "Image" item Type, and have a map container for each language.
       page = catalog.pages.find_by(slug: geosearch_slug)
@@ -79,10 +79,10 @@ class ViatimagesPagesController < PagesController
                              .order(Arel.sql("data->>'#{corpus_type.find_field('titre').uuid}'"))
 
       # Retrieve the geographic images for a specific feature
-      geographic_images = geographic_images(request[:feature]) if request[:feature].present?
+      geographic_images = geographic_images(params[:feature]) if params[:feature].present?
 
       # Retrieve the geographic images for a specific corpus
-      corpus_images = corpus_images(request[:corpus]) if request[:corpus].present?
+      corpus_images = corpus_images(params[:corpus]) if params[:corpus].present?
 
       # Check if geographic_images or corpus_images are present and return the
       # value as @geojson. If both are present, always choose corpuses.

@@ -4,7 +4,7 @@ class ObjetslittPagesController < PagesController
   include DailyItem
 
   def show
-    @slug = request[:slug]
+    @slug = params[:slug]
     @page = catalog.pages.where(:slug => @slug).first!
     @daily_item_data = fetch_daily_item_data
 

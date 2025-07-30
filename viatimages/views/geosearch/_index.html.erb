@@ -4,7 +4,7 @@
       <select class="sel_mapsearch" id="<%= element[:name] %>" name="<%= element[:name] %>" onchange="location = this.value;">
         <option value="<%= @base_feature_path %>"><%= t(element[:label]) %></option>
         <% element[:items].each do |item| %>
-          <option value="<%= @base_feature_path + item.id.to_s %>" <%= request[:feature] == item.id.to_s ? 'selected' : '' %>>
+          <option value="<%= @base_feature_path + item.id.to_s %>" <%= params[:feature] == item.id.to_s ? 'selected' : '' %>>
               <%=
                 item.data[@geo_feature_primary_field.uuid]['_translations'] ?
                   item.data[@geo_feature_primary_field.uuid]['_translations'][I18n.locale.to_s] : item.id
@@ -19,7 +19,7 @@
       <option value="<%= @base_corpus_path %>"><%= t('.viat-geosearch-book') %></option>
       <%# TODO: missing data (prepend "personne associée" to corpus title) %>
       <% @corpuses.each do | corpus | %>
-        <option value="<%= @base_corpus_path + corpus.id.to_s %>" <%= request[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
+        <option value="<%= @base_corpus_path + corpus.id.to_s %>" <%= params[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
           <%= corpus.get_value("titre").truncate(70) %>
         </option>
       <% end %>
