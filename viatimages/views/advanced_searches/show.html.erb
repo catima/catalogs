@@ -21,12 +21,6 @@
         <% end %>
 
         <div class="bookmark-links">
-          <%= link_to(
-                fa_icon("arrow-left", :text => t(".back")),
-                new_advanced_search_path(:uuid => @saved_search.uuid),
-                method: :get
-              ) %>
-
           <% if search_exists_for_user?(@saved_search) %>
             <%= link_to(
                   fa_icon("bookmark", :text => t(".searches_remove")),

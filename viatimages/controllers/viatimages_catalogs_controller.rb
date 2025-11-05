@@ -30,7 +30,7 @@ class ViatimagesCatalogsController < CatalogsController
       @domain_choice_set_items.store(
         domain,
         {
-          :link => "images?domaine=#{domain.id}",
+          :link => [I18n.locale, "images?domaine=#{domain.id}"].join("/"),
           :count => image_type.first.items.where(
             "(data->>'#{domain_field.uuid}')::jsonb @> ?", "[\"#{domain.id}\"]"
           ).count
