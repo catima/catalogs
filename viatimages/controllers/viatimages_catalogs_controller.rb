@@ -27,11 +27,10 @@ class ViatimagesCatalogsController < CatalogsController
     domain_choice_set_items = domain_choice_set.empty? ? [] : Choice.where(choice_set_id: domain_choice_set.ids.first).sorted
     @domain_choice_set_items = {}
     domain_choice_set_items.each do |domain|
-      value_slug = [I18n.locale, domain.short_name].join("-")
       @domain_choice_set_items.store(
         domain,
         {
-          :link => [I18n.locale, "images?domaine=#{value_slug}"].join("/"),
+          :link => "images?domaine=#{domain.id}",
           :count => image_type.first.items.where(
             "(data->>'#{domain_field.uuid}')::jsonb @> ?", "[\"#{domain.id}\"]"
           ).count
